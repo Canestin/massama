@@ -1,4 +1,5 @@
 .container {
+  top: 0;
   width: 100%;
   height: 80px;
   background-color: rgb(64, 64, 211);
@@ -6,6 +7,7 @@
   align-items: center;
   justify-content: space-between;
   position: absolute;
+  margin-bottom: 100px;
 }
 
 .logo {
