@@ -10,35 +10,41 @@ import Img6 from "../../images/Pics/51.jpeg";
 
 export default function Inscription() {
 	return (
-		<div className={styles.container}>
-			<div className={styles.images}>
-				<div className={styles.Img1}>
-					<img src={Img1} alt="" />
-				</div>
-				<div>
-					<img className={styles.Img2} src={Img2} alt="" />
-				</div>
+		<>
+			<p className={styles.title}>
+				Femmes et hommes cherchent des plans culs sans prise de tête en Côte
+				d'Ivoire !
+			</p>
+			<div className={styles.container}>
+				<div className={styles.images}>
+					<div className={styles.Img1}>
+						<img src={Img1} alt="" />
+					</div>
+					<div>
+						<img className={styles.Img2} src={Img2} alt="" />
+					</div>
 
-				<div>
-					<img className={styles.Img3} src={Img3} alt="" />
-				</div>
+					<div>
+						<img className={styles.Img3} src={Img3} alt="" />
+					</div>
 
-				<div>
-					<img className={styles.Img4} src={Img4} alt="" />
-				</div>
-				<div>
-					<img className={styles.Img5} src={Img5} alt="" />
-				</div>
+					<div>
+						<img className={styles.Img4} src={Img4} alt="" />
+					</div>
+					<div>
+						<img className={styles.Img5} src={Img5} alt="" />
+					</div>
 
-				<div>
-					<img className={styles.Img6} src={Img6} alt="" />
+					<div>
+						<img className={styles.Img6} src={Img6} alt="" />
+					</div>
+				</div>
+				<div className={styles.formContainer}>
+					<span className={styles.inscription}>INSCRIPTION RAPIDE</span>
+					<Form />
 				</div>
 			</div>
-			<div className={styles.formContainer}>
-				<span className={styles.inscription}>INSCRIPTION RAPIDE</span>
-				<Form />
-			</div>
-		</div>
+		</>
 	);
 }
 
