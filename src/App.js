@@ -1,6 +1,6 @@
 // import logo from "./logo.svg";
 import "./App.css";
-import Inscription from "./components/Header/Inscription";
+import Inscription from "./components/Inscription/Inscription";
 
 function App() {
 	return (
