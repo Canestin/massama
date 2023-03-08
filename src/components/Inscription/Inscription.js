@@ -7,6 +7,7 @@ import Img3 from "../../images/Pics/32.jpeg";
 import Img4 from "../../images/Pics/4.jpeg";
 import Img5 from "../../images/Pics/5.jpeg";
 import Img6 from "../../images/Pics/51.jpeg";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Inscription() {
 	return (
@@ -53,12 +54,15 @@ function Form() {
 	const [pseudo, setPseudo] = useState("");
 	const [gender, setGender] = useState("");
 	const [city, setCity] = useState("");
+	const navigate = useNavigate();
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		console.log(
 			`Age: ${age}, Pseudo: ${pseudo}, City: ${city}, Gender: ${gender}`
 		);
+		navigate("/profiles");
+
 		// Vous pouvez ajouter ici votre logique de soumission de formulaire
 	};
 
