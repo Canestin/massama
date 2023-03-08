@@ -1,5 +1,5 @@
-// import logo from "./logo.svg";
 import "./App.css";
+import DCA from "./components/DCA/DCA";
 import Inscription from "./components/Inscription/Inscription";
 import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
@@ -9,6 +9,7 @@ function App() {
     <div className="App">
       <Navbar />
       <Inscription />
+      <DCA />
       <Footer />
     </div>
   );
