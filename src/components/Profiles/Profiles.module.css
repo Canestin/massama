@@ -1,0 +1,41 @@
+.profilesList {
+	width: 90vw;
+	margin: 50px auto;
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: row;
+	row-gap: 60px;
+	column-gap: 40px;
+	justify-content: center;
+	align-items: center;
+}
+
+.profile {
+	position: relative;
+	width: 200px;
+	height: 200px;
+}
+
+.profile > img {
+	border-radius: 20px;
+}
+
+.profile:hover {
+	scale: 1.05;
+	transition: all 0.4s;
+}
+
+.onlineBtn {
+	position: absolute;
+	top: 20px;
+	right: 20px;
+	color: rgb(86, 206, 86);
+}
+
+.infosprofile {
+	margin-top: 7px;
+}
+
+.infosprofile > span {
+	font-weight: bold;
+}
