@@ -29,19 +29,19 @@ export default function DCA() {
 				</div>
 				<div className={styles.milieu}>
 					{infoMilieu.map(({ id, phopho, nom, content, nb_phopho }) => (
-						<>
-							<div key={id} className={styles.intMilieu}>
-								<div className={styles.leftside}>
-									<img src={phopho} alt="img" />
-									<p>{nom}</p>
-									<p>{nb_phopho} photos</p>
-								</div>
-								<div className={styles.rightside}>
-									<p>{content}</p>
-									<button>Voir son profil</button>
-								</div>
+						<div key={id} className={styles.intMilieu}>
+							<div className={styles.leftside}>
+								<img src={phopho} alt={phopho} />
+								<p className={styles.p1}>{nom}</p>
+								<p>{nb_phopho} photos</p>
 							</div>
-						</>
+							<div className={styles.rightside}>
+								<p>{content}</p>
+								<button>
+									<p>Voir son profil</p>
+								</button>
+							</div>
+						</div>
 					))}
 				</div>
 				<div className={styles.lastpart}>
