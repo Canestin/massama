@@ -1,19 +1,20 @@
 import "./App.css";
-import DCA from "./components/DCA/DCA";
-import Inscription from "./components/Inscription/Inscription";
-import Navbar from "./components/Navbar/Navbar";
-import Footer from "./components/Footer/Footer";
+import Home from "./components/Home/Home";
 import Profiles from "./components/Profiles/Profiles";
+import NotFound from "./components/NotFound/NotFound";
+import { Routes, Route } from "react-router-dom";
+import Conversations from "./components/Conversations/Conversations";
 
 function App() {
 	return (
 		<div className="App">
-			<Navbar />
-			<Inscription />
-			<DCA />
-			<Footer />
-
-			{/* <Profiles /> */}
+			<Routes>
+				<Route path="/" element={<Home />} />
+				<Route path="/profiles" element={<Profiles />} />
+				<Route path="/conversations" element={<Conversations />} />
+				<Route path="/conversations/:id" element={<Conversations />} />
+				<Route path="/*" element={<NotFound />} />
+			</Routes>
 		</div>
 	);
 }
