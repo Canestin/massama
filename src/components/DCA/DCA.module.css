@@ -14,7 +14,6 @@
     width: 100vw;
     height: 100vh;
     padding: 20px 80px;
-
 }
 
 .title{
@@ -36,7 +35,7 @@
 .center .button{
     border: solid 1px rgb(228, 224, 224);
 }
- 
+
 .center .button:hover{
     cursor: pointer;
     background-color: bisque;
@@ -47,7 +46,6 @@
 
     width: 80px;
     margin: 0 2vw;
-
 }
 
 .justinscript{
@@ -56,12 +54,11 @@
     width: 70vw;
     margin: 2vh 0px;
     justify-content: space-between;
-
 }
 
 .justinscript p{
-font-size: large;
-font-weight:bold ;
+    font-size: x-large;
+    font-weight:bold ;
 }
 
 .button{
@@ -81,23 +78,35 @@ font-weight:bold ;
 }
 
 .intMilieu{
-width: 33.33%;
-
-display: flex;
-flex-direction: row;
-height: 100%;
-background-color: rgb(57, 57, 57);
-color: white;
+    width: 33.33%;
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    background-color: rgb(57, 57, 57);
+    color: white;
 }
 
-
 .leftside{
- width: 50%;
- height: 100%;
-display: flex;
-flex-direction: column;
-padding: 3%;
-text-align: justify;
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 3%;
+    text-align: justify;
+}
+
+.leftside p{
+    text-align: center;
+}
+
+.p1{
+    color: palevioletred;
+    font-weight: bold;
+    margin: 5px 0 0;
+}
+
+.leftside img{
+    height: 80%;
 }
 
 .rightside{
@@ -110,9 +119,12 @@ text-align: justify;
    justify-content: space-between;
    }
 
+.rightside button{
+    border-radius: 5px;
+}
 
-.rightside > p{
-
+.rightside button p{
+    font-size: small;
 }
 
 .lastpart{
@@ -121,7 +133,63 @@ text-align: justify;
     text-align: start;
 }
 
+
 .lastpart p{
- margin: 2vh 0;
+    margin: 2vh 0;
 
 }
+
+/* ---------- -------- ---------  */
+
+/* Styles for tablets */
+@media screen and (max-width: 768px) {
+    .principale {
+        width: 100vw;
+        margin: auto;
+        padding: auto;
+        padding: 20px 0px;
+    }
+    .milieu{
+        width: 90%;
+        background-color: black;
+        flex-direction: column;
+    }
+
+    .justinscript{
+        width: 90%;
+        margin: 2vh 0px;
+        justify-content: space-between;
+    }
+    
+    .justinscript p{
+        font-size: large;
+        font-weight:bold ;
+    }
+    .intMilieu{
+        width: 100%;
+
+    }
+    .rightside{
+       font-size: x-large;
+       }
+  }
+
+  /* Styles for smartphones */
+  @media screen and (max-width: 480px) {
+    .principale {
+        width: 100vw;
+        padding: 20px 0px;
+        margin: auto;
+        padding: auto;
+    }
+    .milieu{
+        width: 90%;
+        flex-direction: column;
+    }
+    .intMilieu{
+        width: 100%;
+    }
+    .rightside{
+        font-size: small;
+        }
+  }
