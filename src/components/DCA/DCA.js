@@ -9,7 +9,7 @@ export default function DCA() {
 		<>
 			<div className={styles.principale}>
 				<div className={styles.title}>
-					<img className={styles.image} src={badge} width={80} alt="badge" />
+					<img className={styles.image} src={badge} alt="badge" />
 					<h1>Discrétion, Confidentialité & Anonymat</h1>
 					<img src={badge} className={styles.image} alt="badge" />
 				</div>
@@ -40,7 +40,6 @@ export default function DCA() {
 								<button>
 									<p>Voir son profil</p>
 								</button>
-
 							</div>
 						</div>
 					))}

@@ -6,10 +6,10 @@ import Footer from "../Footer/Footer";
 export default function Home() {
 	return (
 		<>
-			<Navbar />
+			{/* <Navbar /> */}
 			<Inscription />
 			<DCA />
-			<Footer />
+			{/* <Footer /> */}
 		</>
 	);
 }
