@@ -2,7 +2,7 @@ import React from "react";
 import Navbar from "../Navbar/Navbar";
 import styles from "./Conversations.module.css";
 import { Link } from "react-router-dom";
-import { imageMap } from "../../images/utils/helpers";
+import { imageMap } from "../../utils/helpers";
 import { AiFillMessage } from "react-icons/ai";
 import { IoSend } from "react-icons/io5";
 

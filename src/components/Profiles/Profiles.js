@@ -1,6 +1,6 @@
 import Navbar from "../Navbar/Navbar";
 import styles from "./Profiles.module.css";
-import { imageMap } from "../../images/utils/helpers";
+import { imageMap } from "../../utils/helpers";
 import { IoIosRadioButtonOn } from "react-icons/io";
 import { Link } from "react-router-dom";
 
