@@ -1,14 +1,16 @@
-import Navbar from "../Navbar/Navbar";
 import styles from "./Profiles.module.css";
 import { imageMap } from "../../utils/helpers";
-import { IoIosRadioButtonOn } from "react-icons/io";
 import { Link } from "react-router-dom";
+import Menu from "../Menu/Menu";
 
 export default function Profiles() {
 	const profiles = new Array(100).fill(0);
 	return (
-		<div className="Profiles">
-			<Navbar />
+		<div className={styles.container}>
+			{/* <Navbar /> */}
+			<div className="menu">
+				<Menu />
+			</div>
 
 			<div className={styles.profilesList}>
 				{profiles.map((_, i) => {
@@ -27,16 +29,24 @@ export default function Profiles() {
 function User({ image, id }) {
 	return (
 		<div className={styles.profile}>
-			<div className={styles.onlineBtn}>
-				<IoIosRadioButtonOn />
-			</div>
 			<img
 				style={{ objectFit: "cover", objectPosition: "top" }}
 				src={image}
 				alt="women"
 			/>
 			<div className={styles.infosprofile}>
-				<span>Sarah - 27 ans</span>
+				<div
+					style={{
+						display: "flex",
+						justifyContent: "center",
+						alignItems: "center",
+						gap: "10px",
+					}}
+				>
+					<div className={styles.onlineBtn} />
+					<span>Sarah</span> <br />
+				</div>
+				<span>27 ans - Abidjan</span>
 			</div>
 		</div>
 	);

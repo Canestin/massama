@@ -12,7 +12,7 @@ function App() {
 				<Route path="/" element={<Home />} />
 				<Route path="/profiles" element={<Profiles />} />
 				<Route path="/conversations" element={<Conversations />} />
-				<Route path="/conversations/:id" element={<Conversations />} />
+				<Route path="/conversations/:userId" element={<Conversations />} />
 				<Route path="/*" element={<NotFound />} />
 			</Routes>
 		</div>
