@@ -2,13 +2,14 @@
 	font-size: 25px;
 	font-weight: bold;
 	margin: 20px;
+	color: white;
 }
 
 .container {
 	width: 70vw;
 	height: 40vw;
 	margin: 0 auto 100px;
-	background-color: #212529;
+	background-color: rgb(64, 64, 211);
 	display: grid;
 	grid-template-columns: 1fr 1fr;
 	column-gap: 20px;

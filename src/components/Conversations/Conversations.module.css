@@ -1,20 +1,39 @@
-.container {
-	width: 100vw;
-	height: calc(100vh - 70px);
-	margin: 0 auto;
+.bigContainer {
 	display: grid;
-	grid-template-columns: 1fr 2fr 1fr;
+	grid-template-columns: 250px 1fr;
+	background-color: #0d1115;
+}
+
+.container {
+	width: calc(90vw - 250px);
+	max-width: 1200px;
+	height: calc(100vh - 70px);
+	margin: 10px auto 0;
+	display: grid;
+	grid-template-columns: 300px 2fr;
+	gap: 10px;
 	overflow: hidden;
+	border-radius: 20px;
 }
 
 .containerProfiles {
-	background-color: white;
 	overflow: scroll;
+	border-radius: 20px;
+}
+
+.containerListConv {
+	overflow: scroll;
+	background-color: #181f29;
+	height: auto;
+	max-height: 100%;
+	border-radius: 20px;
 }
 
 .containerConv {
-	border-left: 1px solid rgb(231, 231, 231);
 	overflow: scroll;
+	scroll-snap-type: none;
+	background-color: #181f29;
+	border-radius: 20px;
 }
 
 .containerUserDesc {
@@ -46,50 +65,36 @@
 	margin-bottom: 10px;
 }
 
-.discussionDiv {
-	background-color: white;
-	position: sticky;
-	top: 0px;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	padding: 30px 20px;
-	z-index: 999;
-	border-bottom: 1px solid rgb(231, 231, 231);
-}
-.discussion {
-	font-size: 25px;
-	font-weight: bold;
-	text-align: left;
-}
 .conv {
-	height: 85px;
-	margin: 5px;
-	padding: 5px;
-	border-radius: 10px;
+	height: 65px;
+	padding: 0px 15px;
 	display: grid;
 	grid-template-columns: 1fr 8fr;
 	justify-content: center;
 	align-items: center;
-	background-color: rgba(64, 64, 211, 0.1);
 }
 
 .conv:hover {
-	background-color: gray;
+	background-color: rgba(64, 64, 211, 0.4);
 }
 
 .conv img {
-	width: 60px;
-	height: 60px;
-	border-radius: 30px;
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
 }
 .infosprofile {
 	height: 100%;
 	padding-left: 10px;
 	display: flex;
 	flex-direction: column;
-	justify-content: space-evenly;
+	justify-content: center;
+	gap: 5px;
 	align-items: flex-start;
+}
+
+.infosprofile > span {
+	font-size: 13px;
 }
 
 .convContainer {
@@ -97,24 +102,24 @@
 }
 
 .nameAndHour {
+	padding-right: 10px;
 	width: 100%;
 	display: flex;
 	justify-content: space-between;
+	align-items: flex-end;
 }
 
 .userInfosMessage {
 	position: sticky;
 	top: 0;
 	height: 70px;
-	background-color: white;
-}
-
-.userInfosMessage {
+	background-color: #181f29;
 	display: grid;
 	grid-template-columns: auto 1fr;
 	align-items: center;
 	padding-left: 30px;
-	border-bottom: 1px solid rgb(231, 231, 231);
+	box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
+	border-radius: 20px;
 }
 
 .userInfosMessage > img {
@@ -137,58 +142,65 @@
 .messagesConv {
 	display: flex;
 	flex-direction: column;
+	padding: 10px;
 }
 
 .message {
 	width: 60%;
 	display: flex;
-	align-self: flex-start;
+	/* align-self: flex-start; */
 	border-radius: 15px;
 	padding: 5px 15px;
 	margin: 10px;
 }
 
-.myMessage {
-	background-color: rgba(64, 64, 211, 0.1);
-	justify-content: flex-start;
-}
-
-.myMessage > span {
-	text-align: start;
-}
-
-.otherMessage {
-	background-color: rgb(64, 64, 211); /*this*/
-	align-self: flex-end;
-}
-
-.otherMessage > span {
+.message > span {
 	text-align: start;
 	color: white;
 }
 
-.inputMesssage {
-	width: 50vw;
-	height: 60px;
-	background-color: white;
-	position: absolute;
-	bottom: 0;
-	display: flex;
-	border-top: 1px solid rgb(231, 231, 231);
+.myMessage {
+	background-color: rgb(64, 64, 211);
+	align-self: flex-end;
 }
 
-.inputMesssage > input {
-	outline: none;
-	width: 70%;
-	height: 70%;
-	margin: auto;
-	background-color: #e4e6eb;
-	border-radius: 20px;
+.otherMessage {
+	background-color: gray;
+	align-self: flex-start;
+}
+
+.inputMesssage {
+	width: 100%;
+	margin: 0 auto;
+	height: 60px;
+	position: sticky;
+	bottom: 0;
+	background-color: #181f29;
 }
 
 .inputMesssage > div {
+	width: 80%;
+	margin: 0 auto;
+	height: 60px;
+	position: sticky;
+	bottom: 0;
+	background-color: #181f29;
+	display: flex;
+}
+
+.inputMesssage > div > input {
+	outline: none;
+	width: 100%;
+	height: 70%;
+	margin: auto 0;
+	background-color: black;
+	border-radius: 20px;
+	color: white;
+}
+
+.inputMesssage > div > div {
 	position: absolute;
-	top: 15px;
+	top: 18px;
 	right: 20px;
 	cursor: pointer;
 }

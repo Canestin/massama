@@ -1,0 +1,71 @@
+.container {
+	height: 100%;
+	display: grid;
+	grid-template-rows: 14% 9% 50% 17% 10%;
+	/* box-shadow: 0 3px 4px rgba(0, 0, 0, 0.3); */
+}
+
+.container > div {
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	padding: 0 25px;
+	gap: 15px;
+}
+
+.container > :first-child {
+	justify-content: center;
+}
+
+.logo {
+	/* background-color: red; */
+}
+
+.logo > img {
+	width: 60%;
+	height: 60%;
+	object-fit: contain;
+	object-position: top;
+}
+
+.username {
+}
+
+.username > img {
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+}
+
+.usernameInfos {
+	text-align: start;
+}
+
+.listItems {
+	display: flex;
+	flex-direction: column;
+	padding: 30px 0 !important;
+}
+
+.listItems > a {
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: flex-start;
+	padding: 12px 25px;
+	gap: 20px;
+}
+
+.listItems > a:hover {
+	background-color: rgb(41, 39, 39);
+	cursor: pointer;
+}
+
+.listItems > a > span {
+	color: white;
+}
+
+.settings {
+	padding: 0 !important;
+}

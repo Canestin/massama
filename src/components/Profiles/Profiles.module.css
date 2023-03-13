@@ -1,10 +1,16 @@
+.container {
+	display: grid;
+	grid-template-columns: 250px 1fr;
+	background-color: #0d1115;
+}
+
 .profilesList {
-	width: 90vw;
+	padding-right: 7vw;
 	margin: 50px auto;
 	display: flex;
 	flex-wrap: wrap;
 	flex-direction: row;
-	row-gap: 60px;
+	row-gap: 40px;
 	column-gap: 40px;
 	justify-content: center;
 	align-items: center;
@@ -12,12 +18,16 @@
 
 .profile {
 	position: relative;
-	width: 200px;
-	height: 200px;
+	padding-bottom: 5px;
+	width: 160px;
+	background-color: #181f29;
+	box-shadow: 0 3px 4px rgba(0, 0, 0, 0.3);
+	border-radius: 20px;
 }
 
 .profile > img {
-	border-radius: 20px;
+	height: 160px;
+	border-radius: 20px 20px 0 0;
 }
 
 .profile:hover {
@@ -27,18 +37,26 @@
 }
 
 .onlineBtn {
-	position: absolute;
-	top: 20px;
-	right: 20px;
-	color: rgb(86, 206, 86);
+	width: 8px;
+	height: 8px;
+	background-color: #0f1;
+	border-radius: 4px;
+	font-size: 10px;
 }
 
 .infosprofile {
-	margin-top: 7px;
+	padding: 5px;
+}
+
+.infosprofile > div > span {
+	font-weight: bold;
+	font-size: 12px;
+	color: white;
 }
 
 .infosprofile > span {
-	font-weight: bold;
+	font-size: 10px;
+	color: #878787;
 }
 
 a {
