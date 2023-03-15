@@ -1,4 +1,5 @@
 export const imageMap = {
+	0: require("../images/others/no-profile-man.png"),
 	1: require("../images/Pics/1.jpeg"),
 	2: require("../images/Pics/2.jpeg"),
 	3: require("../images/Pics/3.jpeg"),
