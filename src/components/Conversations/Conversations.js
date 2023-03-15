@@ -1,22 +1,55 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./Conversations.module.css";
 import { Link } from "react-router-dom";
 import { imageMap } from "../../utils/helpers";
 import { IoSend } from "react-icons/io5";
 import Menu from "../Menu/Menu";
 import { useParams } from "react-router-dom";
+import { fetchUserByUsername, useStore, addMessage } from "../../utils/store";
+
+const loggedUserId = localStorage.getItem("userId");
 
 export default function Conversations() {
-	const profiles = new Array(5).fill(0);
 	const [inputValue, setInputValue] = React.useState("");
+	// const [channelss, setChannels] = useState([]);
+	const [user, setUser] = useState(null);
+	const messagesEndRef = useRef(null);
+	const { username } = useParams();
+	const channelId = username;
+	const { channels, messages } = useStore({ channelId });
 
-	const { userId } = useParams();
 	const handleInputChange = (event) => {
 		setInputValue(event.target.value);
 	};
 
+	console.log("messages de chez messages : ", messages);
+	console.log("channels de chez channels : ", channels);
+
+	useEffect(() => {
+		messagesEndRef.current.scrollIntoView({
+			block: "end",
+			// behavior: "smooth",
+		});
+	}, [messages]);
+
+	useEffect(() => {
+		// let speaker;
+
+		// for (const user in channels) {
+		// 	if (channel[user].id !== loggedUserId) {
+		// 		speaker = channel[user];
+		// 		console.log("Speaker de chez Speaker", speaker);
+		// 	}
+		// }
+
+		fetchUserByUsername(username, setUser);
+		// const u = channels.find((u) => u.username === username);
+		// setUser(u);
+	}, [username]);
+
 	const handleSendMessage = () => {
-		alert(inputValue);
+		addMessage(inputValue, channelId, loggedUserId);
+		setInputValue("");
 	};
 
 	return (
@@ -27,49 +60,49 @@ export default function Conversations() {
 			<div className={styles.container}>
 				<div className={styles.containerProfiles}>
 					<div className={styles.containerListConv}>
-						{profiles.map((_, i) => {
-							// let img = (i + 1) % 50 !== 0 ? (i + 1) % 50 : 50;
+						{channels.map((channel) => {
+							let speaker;
+
+							for (const user in channel) {
+								if (channel[user].id !== loggedUserId) {
+									speaker = channel[user];
+									console.log("Speaker de chez Speaker", speaker);
+								}
+							}
+
 							return (
 								<Link
-									key={`conversations/${i + 1}`}
-									to={`/conversations/${i + 1}`}
+									key={`conversations/${speaker?.id}`}
+									to={`/conversations/${speaker?.username}`}
 								>
-									<Conv key={`user-${i}`} image={imageMap[i + 1]} id={i + 1} />
+									<Conv profile={speaker} />
 								</Link>
 							);
 						})}
 					</div>
 				</div>
 				<div className={styles.containerConv}>
-					{/* THIS */}
 					<div className={styles.userInfosMessage}>
 						<img
 							style={{ objectFit: "cover", objectPosition: "top" }}
-							src={imageMap[userId]}
+							src={imageMap[user?.avatar]}
 							alt="women"
 						/>
 						<div>
-							<span style={{ color: "white" }}>Sarah </span>
-							<span style={{ color: "gray" }}> En ligne il y a 5 minutes</span>
+							<span style={{ color: "white" }}>
+								{user?.username}, {user?.age} ans
+							</span>
+							<span style={{ color: "gray" }}>{user?.city}</span>
 						</div>
-					</div>{" "}
-					{/* THIS */}
-					<div className={styles.messagesConv}>
-						<Message type={"other"} />
-						<Message type={"me"} />
-						<Message type={"other"} />
-						<Message type={"me"} />
-						<Message type={"other"} />
-						<Message type={"other"} />
-						<Message type={"me"} />
-						<Message type={"me"} />
-						<Message type={"other"} />
-						<Message type={"me"} />
-						<Message type={"other"} />
-						<Message type={"other"} />
-						<Message type={"me"} />
 					</div>
-					{/* THIS */}
+
+					<div className={styles.messagesConv}>
+						{messages.map((message) => (
+							<Message message={message} />
+						))}
+						<div ref={messagesEndRef} style={{ height: 0 }} />
+					</div>
+
 					<div className={styles.inputMesssage}>
 						<div>
 							<input
@@ -89,20 +122,20 @@ export default function Conversations() {
 	);
 }
 
-function Conv({ image, id }) {
+function Conv({ profile }) {
 	return (
 		<div className={styles.conv}>
 			<div>
 				<img
 					style={{ objectFit: "cover", objectPosition: "top" }}
-					src={image}
+					src={imageMap[profile?.avatar]}
 					alt="women"
 				/>
 			</div>
 
 			<div className={styles.infosprofile}>
 				<div className={styles.nameAndHour}>
-					<span style={{ color: "white" }}>Sarah</span>
+					<span style={{ color: "white" }}>{profile.username}</span>
 					<span style={{ color: "gray", fontSize: "11px" }}>
 						Il y a 10 minutes
 					</span>
@@ -113,17 +146,16 @@ function Conv({ image, id }) {
 	);
 }
 
-function Message({ type }) {
+function Message({ message }) {
+	const type = message.author_id === loggedUserId ? "me" : "other";
+
 	return (
 		<div
 			className={`${styles.message} ${
 				type === "other" ? styles.otherMessage : styles.myMessage
 			}`}
 		>
-			<span>
-				Bonjour Luck ! Comment tu vas ? J'aime bien sortir sur abidjan les
-				vendredis soir passer du bon temps.
-			</span>
+			<span>{message.message}</span>
 		</div>
 	);
 }
