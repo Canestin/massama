@@ -1,13 +1,16 @@
 import React from "react";
 import styles from "./Menu.module.css";
 // import logo from "../../images/others/ph-logo.png";
-import userImg from "../../images/Pics/1.jpeg";
 import { BsSearch, BsEye } from "react-icons/bs";
 import { TbMessageCircle, TbWallet, TbSettings, TbHelp } from "react-icons/tb";
 import { RiLogoutBoxLine } from "react-icons/ri";
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import UserContext from "../../utils/UserContext";
+import { imageMap } from "../../utils/helpers";
 
 export default function Menu() {
+	const loggedUser = useContext(UserContext);
 	return (
 		<div className={styles.container}>
 			<div className={styles.logo}>
@@ -17,9 +20,9 @@ export default function Menu() {
 				</span>
 			</div>
 			<div className={styles.username}>
-				<img src={userImg} alt="username" />
+				<img src={imageMap[loggedUser?.avatar]} alt="username" />
 				<div className={styles.usernameInfos}>
-					<span style={{ color: "white" }}>sarah</span>
+					<span style={{ color: "white" }}>{loggedUser?.username}</span>
 					<br />
 					<span style={{ color: "gray" }}>Votre profil</span>
 				</div>
@@ -29,7 +32,7 @@ export default function Menu() {
 					<BsSearch color="#6438E1" size={28} />
 					<span>Parcourir</span>
 				</Link>
-				<Link to="/conversations/1">
+				<Link to="/conversations">
 					<TbMessageCircle color="#6438E1" size={28} />
 					<span>Messages</span>
 				</Link>
