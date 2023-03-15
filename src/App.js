@@ -1,4 +1,3 @@
-import "./App.css";
 import React, { useState, useEffect } from "react";
 import Home from "./components/Home/Home";
 import Profiles from "./components/Profiles/Profiles";
