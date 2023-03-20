@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./Menu.module.css";
 // import logo from "../../images/others/ph-logo.png";
 import { BsSearch, BsEye } from "react-icons/bs";
@@ -8,9 +8,12 @@ import { Link } from "react-router-dom";
 import { useContext } from "react";
 import UserContext from "../../utils/UserContext";
 import { imageMap } from "../../utils/helpers";
+import { useStore } from "../../utils/store";
 
 export default function Menu() {
 	const loggedUser = useContext(UserContext);
+	const { channels } = useStore();
+
 	return (
 		<div className={styles.container}>
 			<div className={styles.logo}>
@@ -28,11 +31,11 @@ export default function Menu() {
 				</div>
 			</div>
 			<div className={styles.listItems}>
-				<Link to="/profiles">
+				<Link to="/feed">
 					<BsSearch color="#6438E1" size={28} />
 					<span>Parcourir</span>
 				</Link>
-				<Link to="/conversations">
+				<Link to={`/conversations/${channels[0]?.id}`}>
 					<TbMessageCircle color="#6438E1" size={28} />
 					<span>Messages</span>
 				</Link>
