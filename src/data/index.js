@@ -1,6 +1,6 @@
-import photo1 from "../images/Pics/1.jpeg";
-import photo2 from "../images/Pics/98.jpeg";
-import photo3 from "../images/Pics/99.jpeg";
+import photo1 from "../images/profiles/1.jpeg";
+import photo2 from "../images/profiles/98.jpeg";
+import photo3 from "../images/profiles/99.jpeg";
 
 const infoMilieu = [
 	{

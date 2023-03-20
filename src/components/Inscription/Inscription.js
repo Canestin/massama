@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { FaUserAlt, FaCalendarAlt, FaBuilding, FaMarker } from "react-icons/fa";
 import styles from "./Inscription.module.css";
-import Img1 from "../../images/Pics/1.jpeg";
-import Img2 from "../../images/Pics/100.jpeg";
-import Img3 from "../../images/Pics/32.jpeg";
-import Img4 from "../../images/Pics/4.jpeg";
-import Img5 from "../../images/Pics/5.jpeg";
-import Img6 from "../../images/Pics/51.jpeg";
-import { Link, useNavigate } from "react-router-dom";
+import Img1 from "../../images/profiles/1.jpeg";
+import Img2 from "../../images/profiles/100.jpeg";
+import Img3 from "../../images/profiles/32.jpeg";
+import Img4 from "../../images/profiles/4.jpeg";
+import Img5 from "../../images/profiles/5.jpeg";
+import Img6 from "../../images/profiles/51.jpeg";
+import { useNavigate } from "react-router-dom";
 
 export default function Inscription() {
 	return (
@@ -58,12 +58,7 @@ function Form() {
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
-		console.log(
-			`Age: ${age}, Pseudo: ${pseudo}, City: ${city}, Gender: ${gender}`
-		);
-		navigate("/profiles");
-
-		// Vous pouvez ajouter ici votre logique de soumission de formulaire
+		navigate("/feed");
 	};
 
 	const handleAgeChange = (event) => {
