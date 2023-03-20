@@ -75,6 +75,7 @@ button {
 	color: #525355;
 }
 
+textarea,
 input,
 select {
 	padding-left: 20px;

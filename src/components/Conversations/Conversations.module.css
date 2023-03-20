@@ -76,6 +76,28 @@
 	align-items: center;
 }
 
+.conv > div {
+	position: relative;
+}
+
+.statusLine {
+	position: absolute;
+	bottom: 7px;
+	right: 0;
+	width: 8px;
+	height: 8px;
+	border: 0.2px solid white;
+	border-radius: 50%;
+}
+
+.online {
+	background-color: #0f1;
+}
+
+.offline {
+	background-color: orange;
+}
+
 .conv:hover {
 	background-color: rgba(64, 64, 211, 0.4);
 }
@@ -95,16 +117,17 @@
 	align-items: flex-start;
 }
 
-.infosprofile > span {
-	font-size: 13px;
+.infosprofile > div {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
 }
 
-.convContainer {
-	padding: 0 5px 0 10px;
+.infosprofile .lastMessageContainer {
+	font-size: 14px;
 }
 
 .nameAndHour {
-	padding-right: 10px;
 	width: 100%;
 	display: flex;
 	justify-content: space-between;
@@ -123,12 +146,16 @@
 	border-radius: 20px;
 }
 
-.userInfosMessage > img {
+.messageCheck {
+	color: green;
+}
+.userInfosMessage > div > img {
+	position: relative;
 	width: 40px;
 	height: 40px;
 	border-radius: 20px;
-	margin-right: 15px;
 }
+
 .userInfosMessage > div {
 	display: flex;
 	gap: 5px;
@@ -141,6 +168,7 @@
 }
 
 .messagesConv {
+	flex-shrink: 1;
 	display: flex;
 	flex-direction: column;
 	padding: 10px;
@@ -174,6 +202,7 @@
 .inputMesssage {
 	width: 100%;
 	margin: 0 auto;
+	flex-grow: 1;
 	height: 60px;
 	position: sticky;
 	bottom: 0;
@@ -194,11 +223,21 @@
 .inputMesssage > div > input {
 	outline: none;
 	width: 100%;
-	height: 70%;
+	height: 70px;
+	padding: 8px;
+	padding-right: 50px;
 	margin: auto 0;
 	background-color: black;
 	border-radius: 20px;
 	color: white;
+	word-wrap: break-word;
+	overflow-wrap: break-word;
+	resize: vertical;
+	height: auto;
+	overflow: hidden;
+	line-height: 1.5;
+	border: none;
+	overflow: scroll;
 }
 
 .inputMesssage > div > div {
