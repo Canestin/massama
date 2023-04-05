@@ -32,7 +32,6 @@ function UserForm() {
 		} else {
 			setFormError("");
 			setFormSuccess(true);
-			console.log("Data de chez data", data);
 			setUsername("");
 			setAvatar(avatar);
 			// setCity("");
