@@ -1,22 +1,45 @@
-.div {
-	width: 100vw;
+body {
+	background-color: rgb(4, 4, 25);
+}
+
+.container {
+	width: 100%;
+	display: grid;
+}
+
+.userDiv {
+	margin: 20px 20% 10px;
+}
+.user {
+	/* width: 100%; */
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	margin: 100px auto 0;
+	margin: 0 auto;
+	padding-top: 50px;
+	background-color: rgba(64, 64, 211, 0.1);
+	border-radius: 0 0 20px 20px;
 }
 
-.h1,
-.a {
-	font-size: 30px;
+.sendMessage {
+	font-size: 18px;
 	color: white;
 	margin-bottom: 20px;
+	cursor: pointer;
+	background-color: rgba(64, 64, 211, 0.5);
+	padding: 10px 20px;
+	border-radius: 20px;
+}
+
+.name {
+	font-size: 22px;
+	color: white;
 	cursor: pointer;
 }
 
 .a:hover {
-	color: rgb(220, 144, 50);
+	color: rgb(64, 64, 211);
 }
 
 .loadingContainer {
@@ -26,6 +49,7 @@
 	justify-content: center;
 	align-items: center;
 }
+
 .loading {
 	font-size: 100px;
 	font-weight: bold;
@@ -33,16 +57,130 @@
 }
 
 .profileImg {
-	width: 170px;
-	height: 170px;
+	border: 5px solid white;
+	width: 130px;
+	height: 130px;
 	border-radius: 50%;
+	margin-bottom: 20px;
 }
 
+.containerName {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	gap: 10px;
+}
+
+.online {
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background-color: #0f1;
+}
+
+.userInfos {
+	text-align: center;
+	font-size: 12px;
+	color: rgb(202, 195, 195);
+	margin-top: 10px;
+	margin-bottom: 20px;
+}
+
+.like {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	background-color: rgba(64, 64, 211, 0.1);
+	padding: 20px;
+	margin: 20px 10px;
+	border-radius: 20px;
+}
+
+.like > .title {
+	text-align: center;
+	font-size: 14px;
+	font-weight: bold;
+	color: rgb(100, 56, 225);
+	margin-bottom: 10px;
+}
+
+.likeWords {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	gap: 10px;
+	flex-wrap: wrap;
+	padding: 20px;
+}
+
+.likeWords span {
+	background-color: rgba(64, 64, 211, 0.3);
+	padding: 5px 10px;
+	border-radius: 10px;
+	color: white;
+}
+
+.informations {
+	display: flex;
+	flex-direction: column !important;
+	justify-content: center !important;
+	align-items: center !important;
+}
+
+.infosList {
+	width: 60%;
+	padding: 20px;
+}
+
+.infosList > div {
+	padding: 10px;
+	display: flex;
+	justify-content: space-between;
+}
+
+.infosList > div > span {
+	font-size: 14px;
+	font-weight: 600;
+}
+.infosList > div > span:first-child {
+	color: gray;
+}
+
+.infosList > div > span:nth-child(2) {
+	color: white;
+}
+
+.goBack {
+	position: fixed;
+	top: 20px;
+	left: 80px;
+	cursor: pointer;
+}
 @keyframes spin {
 	from {
 		transform: rotate(0deg);
 	}
 	to {
 		transform: rotate(360deg);
+	}
+}
+
+@media only screen and (max-width: 768px) {
+	.container {
+	}
+
+	.userDiv {
+		margin: 0;
+	}
+
+	.infosList {
+		width: 100%;
+	}
+
+	.goBack {
+		left: 20px;
 	}
 }
