@@ -1,8 +1,18 @@
+.menu {
+	max-width: 280px;
+	height: 100vh;
+	background-color: #181f29;
+	position: sticky;
+	top: 0;
+}
+
 .container {
+	width: 100%;
+	position: relative;
 	height: 100%;
 	display: grid;
 	grid-template-rows: 14% 9% 50% 17% 10%;
-	/* box-shadow: 0 3px 4px rgba(0, 0, 0, 0.3); */
+	transition: all 1s ease;
 }
 
 .container > div {
@@ -18,17 +28,19 @@
 }
 
 .logo {
-	/* background-color: red; */
 }
 
 .logo > img {
-	width: 60%;
-	height: 60%;
-	object-fit: contain;
+	width: 130%;
+	height: auto;
+	object-fit: cover;
 	object-position: top;
 }
 
 .username {
+	display: flex;
+	justify-content: flex-start !important;
+	gap: 15px;
 }
 
 .username > img {
@@ -68,4 +80,57 @@
 
 .settings {
 	padding: 0 !important;
+}
+
+.closeMenu {
+	display: none;
+	position: absolute;
+	right: 20px;
+	top: 28px;
+	z-index: 100;
+}
+
+@media only screen and (max-width: 768px) {
+	.container {
+		position: relative;
+		grid-template-rows: 12% 54% 22% 12%;
+	}
+
+	.container > div {
+		gap: 5px;
+	}
+
+	.listItems > a > span {
+		font-size: 16px;
+	}
+
+	.usernameInfos span {
+		font-size: 14px;
+	}
+
+	.username > img {
+		margin-right: 5px;
+	}
+
+	.closeMenu {
+		display: block;
+	}
+
+	.menu {
+		width: 80%;
+		position: fixed;
+		left: 0;
+		top: 0;
+		z-index: 999;
+		transform: translateX(-100%);
+		transition: transform 0.3s ease-in-out;
+	}
+
+	.menuDisplayed {
+		transform: translateX(0%);
+	}
+
+	.hearderMobile {
+		display: block;
+	}
 }
