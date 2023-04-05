@@ -11,9 +11,12 @@ textarea {
 	-moz-osx-font-smoothing: grayscale;
 }
 
-.menu {
-	height: 100vh;
-	background-color: #181f29;
-	position: sticky;
-	top: 0;
+.hearderMobile {
+	display: none;
+}
+
+@media only screen and (max-width: 768px) {
+	.hearderMobile {
+		display: block;
+	}
 }

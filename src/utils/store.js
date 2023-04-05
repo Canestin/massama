@@ -12,7 +12,7 @@ export const useStore = (props) => {
 	const [messages, setMessages] = useState([]);
 	const [newMessage, setNewMessage] = useState(null);
 	const [newChannel, setNewChannel] = useState(null);
-	const [deletedChannel, handleDeletedChannel] = useState(null);
+	// const [deletedChannel, handleDeletedChannel] = useState(null);
 
 	const location = useLocation();
 
@@ -59,15 +59,21 @@ export const useStore = (props) => {
 					table: "channels",
 				},
 				(payload) => {
-					if (payload.eventType === "INSERT") {
-						const channelInfos = getChannelsInfos([payload.new])[0];
-						setNewChannel(channelInfos);
-					} else if (payload.eventType === "UPDATE") {
-						const updatedChannels = channels.sort(function (a, b) {
-							return new Date(b.lastMessageDate) - new Date(a.lastMessageDate);
-						});
-						setChannels(updatedChannels);
-					}
+					// if (payload.eventType === "INSERT") {
+					// 	const channelInfos = getChannelsInfos([payload.new])[0];
+					// 	setNewChannel(channelInfos);
+					// } else if (payload.eventType === "UPDATE") {
+					// 	const updatedChannels = channels.sort(function (a, b) {
+					// 		return new Date(b.lastMessageDate) - new Date(a.lastMessageDate);
+					// 	});
+					// 	setChannels(updatedChannels);
+					// }
+					handeChannelsChanges(
+						payload,
+						location.state,
+						setNewChannel,
+						setChannels
+					);
 				}
 			)
 			.on(
@@ -98,6 +104,7 @@ export const useStore = (props) => {
 			supabase.removeChannel(messageListener);
 			supabase.removeChannel(channelListener);
 		};
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	useEffect(() => {
@@ -121,7 +128,11 @@ export const useStore = (props) => {
 
 	// New message received from Postgres
 	useEffect(() => {
-		if (!!props?.channelId && !!newMessage) {
+		if (
+			!!props?.channelId &&
+			!!newMessage &&
+			newMessage.channel_id === props.channelId
+		) {
 			setMessages(messages.concat(newMessage));
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -136,13 +147,13 @@ export const useStore = (props) => {
 	}, [newChannel]);
 
 	// Deleted channel received from postgres
-	useEffect(() => {
-		if (deletedChannel)
-			setChannels(
-				channels.filter((channel) => channel.id !== deletedChannel.id)
-			);
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [deletedChannel]);
+	// useEffect(() => {
+	// 	if (deletedChannel)
+	// 		setChannels(
+	// 			channels.filter((channel) => channel.id !== deletedChannel.id)
+	// 		);
+	// 	// eslint-disable-next-line react-hooks/exhaustive-deps
+	// }, [deletedChannel]);
 
 	return {
 		messages,
@@ -235,7 +246,9 @@ export const fetchUserById = async (userId, setState) => {
  * @param {function} setState Optionally pass in a hook or callback to set the state
  */
 export const getUserFromChannels = (channels, channelId, setState) => {
+	console.log("On getUserFromChannels !");
 	if (!!channels && !!channelId) {
+		console.log("channels On getUserFromChannels : ", channels);
 		const channel = channels.find((c) => c.id === channelId);
 		setState(channel?.speaker);
 	}

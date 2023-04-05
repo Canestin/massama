@@ -7,6 +7,7 @@ import { Routes, Route } from "react-router-dom";
 import Conversations from "./components/Conversations/Conversations";
 import UserContext from "./utils/UserContext";
 import { fetchUserById } from "./utils/store";
+import Wallet from "./components/Wallet/Wallet";
 
 function App() {
 	const [user, setUser] = useState(null);
@@ -14,6 +15,7 @@ function App() {
 
 	useEffect(() => {
 		fetchUserById(userId, setUser);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	return (
@@ -22,6 +24,7 @@ function App() {
 				<Routes>
 					<Route path="/" element={<Home />} />
 					<Route path="/feed" element={<Feed />} />
+					<Route path="/wallet" element={<Wallet />} />
 					<Route path="/profile/:userId" element={<Profile />} />
 					<Route path="/conversations" element={<Conversations />} />
 					<Route path="/conversations/:channelId" element={<Conversations />} />

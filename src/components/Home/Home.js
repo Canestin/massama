@@ -1,4 +1,5 @@
 import Inscription from "../Inscription/Inscription";
+// eslint-disable-next-line
 import Footer from "../Footer/Footer";
 // import UserForm from "../UserForm/UserForm";
 
