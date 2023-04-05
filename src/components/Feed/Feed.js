@@ -2,23 +2,23 @@ import styles from "./Feed.module.css";
 import { imageMap } from "../../utils/helpers";
 import { Link } from "react-router-dom";
 import Menu from "../Menu/Menu";
-import { addChannel, fetchProfiles } from "../../utils/store";
-import { useContext, useEffect, useState } from "react";
-import UserContext from "../../utils/UserContext";
+import { fetchProfiles } from "../../utils/store";
+import { useEffect, useState } from "react";
+import HeaderMobile from "../HeaderMobile/HeaderMobile";
 
 export default function Feed() {
 	const [profiles, setProfiles] = useState([]);
-	const MyUser = useContext(UserContext);
-
 	useEffect(() => {
 		fetchProfiles(setProfiles);
 	}, []);
 
 	return (
 		<div className={styles.container}>
-			<div className="menu">
-				<Menu />
+			<div className="hearderMobile">
+				<HeaderMobile title="Meet black" />
 			</div>
+
+			<Menu />
 
 			<div className={styles.profilesList}>
 				{profiles.map((profile) => {
