@@ -1,28 +1,30 @@
 import React, { useEffect, useRef, useState } from "react";
-import styles from "./Conversations.module.css";
-import { Link, useLocation } from "react-router-dom";
-import { imageMap } from "../../utils/helpers";
+import { AiOutlineArrowLeft, AiOutlineCheck } from "react-icons/ai";
 import { IoSend } from "react-icons/io5";
-import { AiOutlineCheck } from "react-icons/ai";
-import Menu from "../Menu/Menu";
-import { useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import { imageMap } from "../../utils/helpers";
 import {
-	useStore,
-	addMessage,
 	addChannel,
-	updateChannel,
+	addMessage,
 	getUserFromChannels,
+	updateChannel,
+	useStore,
 } from "../../utils/store";
+import HeaderMobile from "../HeaderMobile/HeaderMobile";
+import Menu from "../Menu/Menu";
+import styles from "./Conversations.module.css";
 
 const loggedUserId = localStorage.getItem("userId");
 
 export default function Conversations() {
 	const [inputValue, setInputValue] = React.useState("");
 	const [user, setUser] = useState(null);
+	const [showDiscussion, setShowDiscussion] = useState(false);
 	const messagesEndRef = useRef(null);
 	const { channelId } = useParams();
 	const { channels, messages } = useStore({ channelId });
 
+	const navigate = useNavigate();
 	const location = useLocation();
 
 	const handleInputChange = (event) => {
@@ -30,6 +32,13 @@ export default function Conversations() {
 	};
 
 	// console.log("messages de chez messages : ", messages);
+	// console.log("user de chez user : ", user);
+	useEffect(() => {
+		if (channelId === "new-channel" || !!channelId) {
+			setShowDiscussion(true);
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 	useEffect(() => {
 		if (!channelId) {
 			if (channels.length > 0) {
@@ -38,10 +47,13 @@ export default function Conversations() {
 		} else if (channelId === "new-channel") {
 			setUser(location.state);
 		} else {
+			console.log("channels on Effect : ", channels);
+			console.log("channelId on Effect : ", channelId);
 			getUserFromChannels(channels, channelId, setUser);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [channelId, channels]);
+	}, [channelId, channels.length]);
+
 	useEffect(() => {
 		messagesEndRef.current.scrollIntoView({
 			block: "end",
@@ -59,6 +71,9 @@ export default function Conversations() {
 	};
 
 	const handleSendMessage = async () => {
+		console.log("user on handleSendMessage : ", user);
+		console.log("channels on handleSendMessage : ", channels);
+
 		const existingChannel = channels.find(
 			(channel) => channel.speaker.id === user.id
 		);
@@ -67,7 +82,7 @@ export default function Conversations() {
 			const newChannelId = await addChannel(user.id, inputValue);
 			addMessage(inputValue, loggedUserId, user.id, newChannelId);
 		} else {
-			updateChannel(existingChannel.id, inputValue);
+			await updateChannel(existingChannel.id, inputValue);
 			addMessage(inputValue, loggedUserId, user.id, existingChannel.id);
 		}
 
@@ -75,68 +90,94 @@ export default function Conversations() {
 	};
 
 	return (
-		<div className={styles.bigContainer}>
-			<div className="menu">
-				<Menu />
+		<>
+			<div className="hearderMobile">
+				<HeaderMobile title="Messages" />
 			</div>
-			<div className={styles.container}>
-				<div className={styles.containerProfiles}>
-					<div className={styles.containerListConv}>
-						{!!channels &&
-							channels.map((channel) => {
-								return (
-									<Link
-										key={`conversations/${channel?.id}`}
-										to={`/conversations/${channel?.id}`}
-									>
-										<Conv profile={channel} />
-									</Link>
-								);
-							})}
-					</div>
-				</div>
-				<div className={styles.containerConv}>
-					<div className={styles.userInfosMessage}>
-						<div style={{ position: "relative" }}>
-							<img
-								style={{ objectFit: "cover", objectPosition: "top" }}
-								src={imageMap[user?.avatar]}
-								alt="women"
-							/>
-							<div className={`${styles.statusLine} ${styles.online}`} />
-						</div>
-						<div style={{ marginLeft: 15 }}>
-							<span style={{ color: "white" }}>
-								{user?.username}, {user?.age} ans
-							</span>
-							<span style={{ color: "gray" }}>{user?.city}</span>
+			<div className={styles.bigContainer}>
+				<Menu />
+				<div className={styles.container}>
+					<div className={styles.containerProfiles}>
+						<div className={styles.containerListConv}>
+							{!!channels &&
+								channels.map((channel) => {
+									return (
+										<Link
+											key={`conversations/${channel?.id}`}
+											to={`/conversations/${channel?.id}`}
+										>
+											<div onClick={() => setShowDiscussion(true)}>
+												<Conv profile={channel} />
+											</div>
+										</Link>
+									);
+								})}
 						</div>
 					</div>
+					<div
+						className={`${styles.containerConv} ${
+							showDiscussion && styles.convDisplayed
+						}`}
+					>
+						<div className={styles.userInfosMessage}>
+							{!!user ? (
+								<>
+									<div style={{ position: "relative" }}>
+										<div className={styles.goBack}>
+											<AiOutlineArrowLeft
+												size={25}
+												color="white"
+												onClick={() => {
+													setShowDiscussion(false);
+													navigate("/conversations");
+												}}
+											/>
+										</div>
 
-					<div className={styles.messagesConv}>
-						{messages?.map((message) => (
-							<Message key={message?.id} message={message} />
-						))}
-						<div ref={messagesEndRef} style={{ height: 0 }} />
-					</div>
+										<img
+											style={{ objectFit: "cover", objectPosition: "top" }}
+											src={imageMap[user?.avatar]}
+											alt="women"
+										/>
+										<div className={`${styles.statusLine} ${styles.online}`} />
+									</div>
+									<div style={{ marginLeft: 15 }}>
+										<span style={{ color: "white" }}>
+											{user?.username}, {user?.age} ans
+										</span>
+										<span style={{ color: "gray" }}>{user?.city}</span>
+									</div>{" "}
+								</>
+							) : (
+								<div />
+							)}
+						</div>
 
-					<div className={styles.inputMesssage}>
-						<div>
-							<input
-								value={inputValue}
-								onChange={handleInputChange}
-								placeholder="Entrer votre message"
-								type="text"
-								onKeyDown={handleKeyDown}
-							/>
-							<div onClick={handleSendMessage}>
-								<IoSend size={22} color="white" />
+						<div className={styles.messagesConv}>
+							{messages?.map((message) => (
+								<Message key={message?.id} message={message} />
+							))}
+							<div ref={messagesEndRef} style={{ height: 0 }} />
+						</div>
+
+						<div className={styles.inputMesssage}>
+							<div>
+								<input
+									value={inputValue}
+									onChange={handleInputChange}
+									placeholder="Entrer votre message"
+									type="text"
+									onKeyDown={handleKeyDown}
+								/>
+								<div onClick={handleSendMessage}>
+									<IoSend size={22} color="white" />
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
+		</>
 	);
 }
 

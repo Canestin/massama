@@ -1,14 +1,13 @@
 .bigContainer {
 	display: grid;
 	grid-template-columns: 250px 1fr;
-	background-color: #0d1115;
 }
 
 .container {
 	width: calc(90vw - 250px);
 	max-width: 1200px;
 	height: calc(100vh - 70px);
-	margin: 10px auto 0;
+	margin: 20px auto 0;
 	display: grid;
 	grid-template-columns: 300px 2fr;
 	gap: 10px;
@@ -149,6 +148,7 @@
 .messageCheck {
 	color: green;
 }
+
 .userInfosMessage > div > img {
 	position: relative;
 	width: 40px;
@@ -176,7 +176,7 @@
 }
 
 .message {
-	width: 60%;
+	max-width: 60%;
 	display: flex;
 	/* align-self: flex-start; */
 	border-radius: 15px;
@@ -245,4 +245,62 @@
 	top: 18px;
 	right: 20px;
 	cursor: pointer;
+}
+
+.goBack {
+	display: none;
+}
+
+@media only screen and (max-width: 768px) {
+	.bigContainer {
+		display: block;
+	}
+
+	.container {
+		width: 90vw;
+		height: calc(100vh - 70px);
+		margin: 20px auto 0;
+		display: grid;
+		grid-template-columns: 220px 1fr;
+		overflow: hidden;
+		border-radius: 20px;
+		padding: 10px;
+	}
+}
+
+@media only screen and (max-width: 428px) {
+	.container {
+		width: 100vw;
+		margin: 0;
+		display: block;
+		grid-template-rows: auto auto;
+		padding: 0px;
+	}
+
+	.convDisplayed {
+		transform: translateX(0%) !important;
+	}
+
+	.containerConv {
+		position: fixed;
+		left: 0;
+		top: 0;
+		width: 100vw;
+		height: 100vh;
+		z-index: 999;
+		transform: translateX(100%);
+		transition: transform 0.3s ease-in-out;
+	}
+
+	.goBack {
+		display: block;
+		position: absolute;
+		top: 5px;
+		left: 0;
+		cursor: pointer;
+	}
+
+	.userInfosMessage > div:nth-child(1) {
+		padding-left: 30px;
+	}
 }
