@@ -165,7 +165,7 @@ export default function Conversations() {
 								<input
 									value={inputValue}
 									onChange={handleInputChange}
-									placeholder="Entrer votre message"
+									placeholder="Entrez votre message"
 									type="text"
 									onKeyDown={handleKeyDown}
 								/>
