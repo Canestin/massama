@@ -50,7 +50,7 @@ export default function Menu({ showMenu, setShowMenu }) {
 				)}
 
 				<div className={styles.username}>
-					<img src={imageMap[loggedUser?.avatar]} alt="username" />
+					<img src={imageMap[loggedUser?.avatar ?? 0]} alt="username" />
 					<div className={styles.usernameInfos}>
 						<span style={{ color: "white" }}>{loggedUser?.username}</span>
 						<br />

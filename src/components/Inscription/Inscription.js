@@ -8,13 +8,13 @@ import Img4 from "../../images/profiles/4.jpeg";
 import Img5 from "../../images/profiles/5.jpeg";
 import Img6 from "../../images/profiles/51.jpeg";
 import { useNavigate } from "react-router-dom";
+import { addUser } from "../../utils/store";
 
 export default function Inscription() {
 	return (
 		<>
 			<p className={styles.title}>
-				Femmes et hommes cherchent des plans culs sans prise de tête en Côte
-				d'Ivoire !
+				Hommes et Femmes cherchent des coups d'un soir à Abidjan
 			</p>
 			<div className={styles.container}>
 				<div className={styles.images}>
@@ -58,7 +58,21 @@ function Form() {
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
+
+		if (!pseudo && !city && !gender && !age) {
+			alert("Veuillez remplir tous les champs !");
+			return;
+		}
+
+		if (age < 18) {
+			alert("Vous devez être majeur pour vous inscrire !");
+			return;
+		}
+
+		addUser(pseudo, 0, city, gender, true, age);
 		navigate("/feed");
+		localStorage.setItem("isFirsTime", "YES");
+		// window.location.reload();
 	};
 
 	const handleAgeChange = (event) => {
@@ -88,20 +102,27 @@ function Form() {
 					name="gender"
 					value={gender}
 					onChange={handleGenderChange}
+					required
 				>
 					<option value="">Je suis</option>
-					<option value="canada">Homme</option>
-					<option value="canada">Femme</option>
+					<option value="man">Homme</option>
+					<option value="woman">Femme</option>
 				</select>
 			</div>
 			<div>
 				<div>
 					<FaBuilding className={styles.icon} />
 				</div>
-				<select id="city" name="city" value={city} onChange={handleCityChange}>
+				<select
+					required
+					id="city"
+					name="city"
+					value={city}
+					onChange={handleCityChange}
+				>
 					<option value="">Sélectionnez votre ville</option>
-					<option value="canada">Abidjan</option>
-					<option value="canada">Yamoussoukro</option>
+					<option value="Abidjan">Abidjan</option>
+					{/* <option value="canada">Yamoussoukro</option> */}
 				</select>
 			</div>
 			<div>
@@ -115,6 +136,7 @@ function Form() {
 					value={age}
 					placeholder="Age"
 					onChange={handleAgeChange}
+					required
 				/>
 			</div>
 			<div>
@@ -128,6 +150,7 @@ function Form() {
 					value={pseudo}
 					placeholder="Votre pseudo"
 					onChange={handlePseudoChange}
+					required
 				/>
 			</div>
 

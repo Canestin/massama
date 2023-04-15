@@ -169,6 +169,29 @@ export const useStore = (props) => {
 };
 
 /**
+ * Insert a new user into the DB
+ * @param {string} username
+ * @param {number} avatar
+ * @param {string} city
+ * @param {string} gender
+ * @param {boolean} nixoups
+ * @param {number} age
+ */
+
+export const addUser = async (username, avatar, city, gender, nixoups, age) => {
+	try {
+		const { data } = await supabase
+			.from("profiles")
+			.insert([{ username, avatar, city, gender, nixoups, age }])
+			.select("id");
+
+		localStorage.setItem("userId", data[0].id);
+	} catch (error) {
+		alert("Erreur lors de l'inscription !");
+	}
+};
+
+/**
  * Fetch all profiles - OKAY -
  */
 export const fetchProfiles = async (setState) => {
