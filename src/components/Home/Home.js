@@ -1,14 +1,13 @@
+import Header from "../Header/Header";
 import Inscription from "../Inscription/Inscription";
-// eslint-disable-next-line
-import Footer from "../Footer/Footer";
-// import UserForm from "../UserForm/UserForm";
 
 export default function Home() {
 	return (
-		<>
+		<div style={{ paddingBottom: 20 }}>
+			<Header />
 			<Inscription />
 			{/* <UserForm />  */}
-		</>
+		</div>
 	);
 }
 
