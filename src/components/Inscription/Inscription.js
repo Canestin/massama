@@ -7,6 +7,9 @@ import Img3 from "../../images/profiles/32.jpeg";
 import Img4 from "../../images/profiles/4.jpeg";
 import Img5 from "../../images/profiles/5.jpeg";
 import Img6 from "../../images/profiles/51.jpeg";
+import Img7 from "../../images/profiles/45.jpeg";
+import Img8 from "../../images/profiles/33.jpeg";
+import Img9 from "../../images/profiles/67.jpeg";
 import { useNavigate } from "react-router-dom";
 import { addUser } from "../../utils/store";
 
@@ -14,31 +17,20 @@ export default function Inscription() {
 	return (
 		<>
 			<p className={styles.title}>
-				Hommes et Femmes cherchent des coups d'un soir à Abidjan
+				Des femmes cherchent des coups d'un soir à Abidjan
 			</p>
+
 			<div className={styles.container}>
 				<div className={styles.images}>
-					<div className={styles.Img1}>
-						<img src={Img1} alt="" />
-					</div>
-					<div>
-						<img className={styles.Img2} src={Img2} alt="" />
-					</div>
-
-					<div>
-						<img className={styles.Img3} src={Img3} alt="" />
-					</div>
-
-					<div>
-						<img className={styles.Img4} src={Img4} alt="" />
-					</div>
-					<div>
-						<img className={styles.Img5} src={Img5} alt="" />
-					</div>
-
-					<div>
-						<img className={styles.Img6} src={Img6} alt="" />
-					</div>
+					{[Img1, Img2, Img3, Img4, Img5, Img6, Img7, Img8, Img9].map(
+						(img, index) => {
+							return (
+								<div key={index}>
+									<img src={img} />
+								</div>
+							);
+						}
+					)}
 				</div>
 				<div className={styles.formContainer}>
 					<span className={styles.inscription}>INSCRIPTION RAPIDE</span>
