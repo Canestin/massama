@@ -38,11 +38,14 @@
 	border-radius: 10px;
 	cursor: pointer;
 }
+.choice > div:hover {
+	border: 2px solid rgb(23, 150, 126);
+}
 
 .choice > div > div {
 	display: flex;
 	flex-direction: row;
-	justify-content: space-between;
+	justify-content: srgb(210, 23, 23);
 	align-items: center;
 	gap: 10px;
 }
@@ -90,4 +93,9 @@
 	color: white;
 	font-weight: bold;
 	margin-top: 30px !important;
+	cursor: pointer;
+}
+
+.payer:hover {
+	background-color: rgb(23, 150, 126) !important;
 }

@@ -2,14 +2,47 @@ import React, { useState } from "react";
 import styles from "./Wallet.module.css";
 import HeaderMobile from "../HeaderMobile/HeaderMobile";
 
+var cdn = document.createElement("script");
+cdn.setAttribute("src", "https://cdn.cinetpay.com/seamless/main.js");
+document.head.appendChild(cdn);
+
 export default function Wallet() {
-	const [choice, setChoice] = useState("standard");
+	const [choice, setChoice] = useState(1000);
 
 	const handleChoice = (c) => {
 		setChoice(c);
 	};
 	const handlePay = () => {
-		console.log("Paiement effectué avec le pack : ", choice);
+		console.log("Pack choisi: ", choice);
+
+		/* eslint-disable no-undef */
+		CinetPay.setConfig({
+			apikey: process.env.REACT_APP_CHECKOUT_API_KEY,
+			site_id: process.env.REACT_APP_CHECKOUT_SITE_ID,
+			notify_url: process.env.REACT_APP_CHECKOUT_NOTIFY_URL,
+			mode: "PRODUCTION",
+		});
+		CinetPay.getCheckout({
+			transaction_id: Math.floor(Math.random() * 100000000).toString(),
+			amount: choice,
+			currency: "XOF",
+			channels: "ALL",
+			description: "Achat du pack",
+		});
+		CinetPay.waitResponse(function (data) {
+			if (data.status === "REFUSED") {
+				if (alert("Votre paiement a échoué")) {
+					window.location.reload();
+				}
+			} else if (data.status === "ACCEPTED") {
+				if (alert("Votre paiement a été effectué avec succès")) {
+					window.location.reload();
+				}
+			}
+		});
+		CinetPay.onError(function (data) {
+			console.log(data);
+		});
 	};
 
 	return (
@@ -22,8 +55,8 @@ export default function Wallet() {
 					<p>Choisissez le pack</p>
 					<div className={styles.choice}>
 						<div
-							onClick={() => handleChoice("basic")}
-							className={choice === "basic" ? styles.chosen : ""}
+							onClick={() => handleChoice(500)}
+							className={choice === 500 ? styles.chosen : ""}
 						>
 							<div>
 								<div className={styles.radio} type="basic" />
@@ -35,8 +68,8 @@ export default function Wallet() {
 							<span>500 FCFA</span>
 						</div>
 						<div
-							onClick={() => handleChoice("standard")}
-							className={choice === "standard" ? styles.chosen : ""}
+							onClick={() => handleChoice(1000)}
+							className={choice === 1000 ? styles.chosen : ""}
 						>
 							<div>
 								<div className={styles.radio} type="basic" />
@@ -48,8 +81,8 @@ export default function Wallet() {
 							<span>1000 FCFA</span>
 						</div>
 						<div
-							onClick={() => handleChoice("premium")}
-							className={choice === "premium" ? styles.chosen : ""}
+							onClick={() => handleChoice(2000)}
+							className={choice === 2000 ? styles.chosen : ""}
 						>
 							<div>
 								<div className={styles.radio} type="basic" />
@@ -61,8 +94,8 @@ export default function Wallet() {
 							<span>2000 FCFA</span>
 						</div>
 						<div
-							onClick={() => handleChoice("utlimate")}
-							className={choice === "utlimate" ? styles.chosen : ""}
+							onClick={() => handleChoice(5000)}
+							className={choice === 5000 ? styles.chosen : ""}
 						>
 							<div>
 								<div className={styles.radio} type="basic" />
@@ -80,7 +113,6 @@ export default function Wallet() {
 					<span>Payer</span>
 				</div>
 			</div>
-			;
 		</>
 	);
 }
