@@ -16,9 +16,13 @@ import { addUser } from "../../utils/store";
 export default function Inscription() {
 	return (
 		<>
-			<p className={styles.title}>
-				Des femmes cherchent des coups d'un soir à Abidjan
-			</p>
+			<div className={styles.title}>
+				<p style={{ marginBottom: 10 }}>
+					Des femmes cherchent des coups d'un soir à{" "}
+					<span style={{ color: "rgb(64, 64, 211)" }}>Abidjan</span>
+				</p>
+				<span>Seras-tu à la hauteur de leurs attentes ?</span>
+			</div>
 
 			<div className={styles.container}>
 				<div className={styles.images}>
