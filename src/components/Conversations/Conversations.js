@@ -13,16 +13,21 @@ import {
 import HeaderMobile from "../HeaderMobile/HeaderMobile";
 import Menu from "../Menu/Menu";
 import styles from "./Conversations.module.css";
-
-const loggedUserId = localStorage.getItem("userId");
+import { useContext } from "react";
+import UserContext from "../../utils/UserContext";
+import { COST_OF_ONE_MESSAGE } from "../../constants";
+import PopupRechargeWallet from "../Popup/Popup";
 
 export default function Conversations() {
 	const [inputValue, setInputValue] = React.useState("");
 	const [user, setUser] = useState(null);
+	const [popupVisible, setPopupVisible] = useState(false);
 	const [showDiscussion, setShowDiscussion] = useState(false);
 	const messagesEndRef = useRef(null);
 	const { channelId } = useParams();
 	const { channels, messages } = useStore({ channelId });
+	const loggedUser = useContext(UserContext).user;
+	const updateUserContext = useContext(UserContext).updateUserContext;
 
 	const navigate = useNavigate();
 	const location = useLocation();
@@ -71,6 +76,12 @@ export default function Conversations() {
 	};
 
 	const handleSendMessage = async () => {
+		if (!inputValue) return;
+		if (loggedUser.wallet < COST_OF_ONE_MESSAGE * 1000) {
+			setPopupVisible(true);
+			return;
+		}
+
 		console.log("user on handleSendMessage : ", user);
 		console.log("channels on handleSendMessage : ", channels);
 
@@ -80,10 +91,10 @@ export default function Conversations() {
 
 		if (!existingChannel) {
 			const newChannelId = await addChannel(user.id, inputValue);
-			addMessage(inputValue, loggedUserId, user.id, newChannelId);
+			addMessage(inputValue, loggedUser?.id, user.id, newChannelId);
 		} else {
 			await updateChannel(existingChannel.id, inputValue);
-			addMessage(inputValue, loggedUserId, user.id, existingChannel.id);
+			addMessage(inputValue, loggedUser?.id, user.id, existingChannel.id);
 		}
 
 		setInputValue("");
@@ -91,34 +102,40 @@ export default function Conversations() {
 
 	return (
 		<>
+			<PopupRechargeWallet
+				popupVisible={popupVisible}
+				setPopupVisible={setPopupVisible}
+			/>{" "}
 			{!showDiscussion && (
 				<div className="hearderMobile">
 					<HeaderMobile title="Messages" />
 				</div>
 			)}
-
 			<div className={styles.bigContainer}>
 				<Menu />
 				<div className={styles.container}>
-					{!showDiscussion && (
-						<div className={styles.containerProfiles}>
-							<div className={styles.containerListConv}>
-								{!!channels &&
-									channels.map((channel) => {
-										return (
-											<Link
-												key={`conversations/${channel?.id}`}
-												to={`/conversations/${channel?.id}`}
-											>
-												<div onClick={() => setShowDiscussion(true)}>
-													<Conv profile={channel} />
-												</div>
-											</Link>
-										);
-									})}
-							</div>
+					<div
+						className={`${styles.containerProfiles} ${
+							showDiscussion && styles.hideContainerProfiles
+						}`}
+					>
+						<div className={styles.containerListConv}>
+							{!!channels &&
+								channels.map((channel) => {
+									return (
+										<Link
+											key={`conversations/${channel?.id}`}
+											to={`/conversations/${channel?.id}`}
+										>
+											<div onClick={() => setShowDiscussion(true)}>
+												<Conv profile={channel} />
+											</div>
+										</Link>
+									);
+								})}
 						</div>
-					)}
+					</div>
+
 					<div
 						className={`${styles.containerConv} ${
 							showDiscussion && styles.convDisplayed
@@ -160,7 +177,11 @@ export default function Conversations() {
 
 						<div className={styles.messagesConv}>
 							{messages?.map((message) => (
-								<Message key={message?.id} message={message} />
+								<Message
+									loggedUserId={loggedUser?.id}
+									key={message?.id}
+									message={message}
+								/>
 							))}
 							<div ref={messagesEndRef} style={{ height: 0 }} />
 						</div>
@@ -266,7 +287,7 @@ function Conv({ profile }) {
 	);
 }
 
-function Message({ message }) {
+function Message({ message, loggedUserId }) {
 	const type = message.sender_id === loggedUserId ? "me" : "other";
 	return (
 		<div

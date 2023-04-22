@@ -12,7 +12,7 @@ import { AiOutlineClose } from "react-icons/ai";
 import logo from "../../images/others/meetblack.svg";
 
 export default function Menu({ showMenu, setShowMenu }) {
-	const loggedUser = useContext(UserContext);
+	const { user } = useContext(UserContext);
 	const { channels } = useStore();
 	const [windowSize, setWindowSize] = useState({
 		width: undefined,
@@ -50,9 +50,9 @@ export default function Menu({ showMenu, setShowMenu }) {
 				)}
 
 				<div className={styles.username}>
-					<img src={imageMap[loggedUser?.avatar ?? 0]} alt="username" />
+					<img src={imageMap[user?.avatar ?? 0]} alt="username" />
 					<div className={styles.usernameInfos}>
-						<span style={{ color: "white" }}>{loggedUser?.username}</span>
+						<span style={{ color: "white" }}>{user?.username}</span>
 						<br />
 						<span style={{ color: "gray" }}>Votre profil</span>
 					</div>
@@ -75,7 +75,10 @@ export default function Menu({ showMenu, setShowMenu }) {
 					</Link> */}
 					<Link to="/wallet">
 						<TbWallet color="#6438E1" size={windowSize.width > 768 ? 28 : 25} />
-						<span>Portefeuille</span>
+						<span>Portefeuille</span>{" "}
+						<span style={{ color: "#6438e1", fontWeight: "bold" }}>
+							{user?.wallet}
+						</span>
 					</Link>
 				</div>
 				<div className={`${styles.listItems} ${styles.settings}`}>
