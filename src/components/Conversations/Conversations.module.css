@@ -281,6 +281,10 @@
 		padding: 0px;
 	}
 
+	.hideContainerProfiles {
+		display: none !important;
+	}
+
 	.convDisplayed {
 		transform: translateX(0%) !important;
 	}

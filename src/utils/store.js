@@ -244,6 +244,22 @@ export const updateChannel = async (channel_id, last_message) => {
 };
 
 /**
+ * Update wallet when message is sent and payment is successful
+ * @param {function} setState Optionally pass in a hook or callback to set the state
+ */
+export const updateWallet = async (newWallet) => {
+	try {
+		await supabase
+			.from("profiles")
+			.update({ wallet: newWallet })
+			.eq("id", loggedUserId);
+	} catch (error) {
+		alert("Erreur lors de la mise à jour du wallet !");
+		console.log("error", error);
+	}
+};
+
+/**
  * Fetch a single user - OKAY -
  * @param {string} userId
  * @param {function} setState Optionally pass in a hook or callback to set the state
