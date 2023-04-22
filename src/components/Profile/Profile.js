@@ -74,7 +74,7 @@ export default function Profile() {
 
 							<div>
 								<span>Taille</span>
-								<span>1.67 m</span>
+								<span>{user?.height} m</span>
 							</div>
 							<div>
 								<span>Poids</span>
