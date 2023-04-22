@@ -59,22 +59,22 @@ export default function Menu({ showMenu, setShowMenu }) {
 				</div>
 				<div className={styles.listItems}>
 					<Link to="/feed">
-						<BsSearch color="#6438E1" size={windowSize.width > 768 ? 28 : 22} />
+						<BsSearch color="#6438E1" size={windowSize.width > 768 ? 28 : 25} />
 						<span>Parcourir</span>
 					</Link>
 					<Link to={`/conversations/${channelId}`}>
 						<TbMessageCircle
 							color="#6438E1"
-							size={windowSize.width > 768 ? 28 : 22}
+							size={windowSize.width > 768 ? 28 : 25}
 						/>
 						<span>Messages</span>
 					</Link>
 					{/* <Link to="/views">
-						<BsEye color="#6438E1" size={windowSize.width > 768 ? 28 : 22} />
+						<BsEye color="#6438E1" size={windowSize.width > 768 ? 28 : 25} />
 						<span>Vues</span>
 					</Link> */}
 					<Link to="/wallet">
-						<TbWallet color="#6438E1" size={windowSize.width > 768 ? 28 : 22} />
+						<TbWallet color="#6438E1" size={windowSize.width > 768 ? 28 : 25} />
 						<span>Portefeuille</span>
 					</Link>
 				</div>
@@ -82,12 +82,12 @@ export default function Menu({ showMenu, setShowMenu }) {
 					<Link to="/settings">
 						<TbSettings
 							color="#6438E1"
-							size={windowSize.width > 768 ? 28 : 22}
+							size={windowSize.width > 768 ? 28 : 25}
 						/>
 						<span>Réglages</span>
 					</Link>
 					<Link to="/wallet">
-						<TbHelp color="#6438E1" size={windowSize.width > 768 ? 28 : 22} />
+						<TbHelp color="#6438E1" size={windowSize.width > 768 ? 28 : 25} />
 						<span>Aide</span>
 					</Link>
 				</div>
@@ -96,7 +96,7 @@ export default function Menu({ showMenu, setShowMenu }) {
 					<Link to="/disconnect">
 						<RiLogoutBoxLine
 							color="#6438E1"
-							size={windowSize.width > 768 ? 28 : 22}
+							size={windowSize.width > 768 ? 28 : 25}
 						/>
 						<span>Deconnexion</span>
 					</Link>
