@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import supabase from "./supabase";
-
-const loggedUserId = localStorage.getItem("userId");
+import { COST_OF_ONE_MESSAGE } from "../constants";
 
 /**
  * @param {number} channelId the currently selected Channel
@@ -18,6 +17,8 @@ export const useStore = (props) => {
 
 	// Load initial data and set up listeners
 	useEffect(() => {
+		const loggedUserId = localStorage.getItem("userId");
+
 		// Get All Channels
 		fetchChannels(setChannels);
 
@@ -29,21 +30,25 @@ export const useStore = (props) => {
 				{
 					event: "INSERT",
 					schema: "public",
-					filter: `receiver_id=eq.${loggedUserId}`,
 					table: "messages",
+					filter: `receiver_id=eq.${localStorage.getItem("userId")}`,
 				},
 
-				(payload) => setNewMessage(payload.new)
+				(payload) => {
+					setNewMessage(payload.new);
+				}
 			)
 			.on(
 				"postgres_changes",
 				{
 					event: "INSERT",
 					schema: "public",
-					filter: `sender_id=eq.${loggedUserId}`,
 					table: "messages",
+					filter: `sender_id=eq.${localStorage.getItem("userId")}`,
 				},
-				(payload) => setNewMessage(payload.new)
+				(payload) => {
+					setNewMessage(payload.new);
+				}
 			)
 			.subscribe();
 
@@ -158,7 +163,7 @@ export const useStore = (props) => {
 	return {
 		messages,
 		channels:
-			channels !== null
+			Boolean(channels) !== false
 				? channels.sort(
 						(a, b) =>
 							new Date(a.last_message_sent_at) -
@@ -179,16 +184,21 @@ export const useStore = (props) => {
  */
 
 export const addUser = async (username, avatar, city, gender, nixoups, age) => {
-	try {
-		const { data } = await supabase
-			.from("profiles")
-			.insert([{ username, avatar, city, gender, nixoups, age }])
-			.select("id");
+	const { data, error } = await supabase
+		.from("profiles")
+		.insert([{ username, avatar, city, gender, nixoups, age }])
+		.select("id");
 
-		localStorage.setItem("userId", data[0].id);
-	} catch (error) {
-		alert("Erreur lors de l'inscription !");
+	if (!error) {
+		return { user_id: data[0]?.id, error: error };
+	} else {
+		return { user_id: null, error: error };
 	}
+
+	// const date = new Date(
+	// 	Date.now() + 100 * 1000 * 60 * 60 * 24 * 365
+	// ).toUTCString();
+	// document.cookie = `auth-uuid=${data[0].id}; expires=${date};`;
 };
 
 /**
@@ -212,6 +222,8 @@ export const fetchProfiles = async (setState) => {
  * @param {function} setState Optionally pass in a hook or callback to set the state
  */
 export const fetchChannels = async (setState) => {
+	const loggedUserId = localStorage.getItem("userId");
+
 	try {
 		const { data } = await supabase
 			.from("channels")
@@ -245,9 +257,11 @@ export const updateChannel = async (channel_id, last_message) => {
 
 /**
  * Update wallet when message is sent and payment is successful
- * @param {function} setState Optionally pass in a hook or callback to set the state
+ * @param {function} setContext Optionally pass in a hook or callback to set the state
  */
-export const updateWallet = async (newWallet) => {
+export const updateWallet = async (newWallet, setContext) => {
+	const loggedUserId = localStorage.getItem("userId");
+
 	try {
 		await supabase
 			.from("profiles")
@@ -272,7 +286,7 @@ export const fetchUserById = async (userId, setState) => {
 			.eq("id", userId)
 			.single();
 		if (setState) setState(data);
-		else return data;
+		return data;
 	} catch (error) {
 		console.log("error", error);
 	}
@@ -285,9 +299,7 @@ export const fetchUserById = async (userId, setState) => {
  * @param {function} setState Optionally pass in a hook or callback to set the state
  */
 export const getUserFromChannels = (channels, channelId, setState) => {
-	console.log("On getUserFromChannels !");
 	if (!!channels && !!channelId) {
-		console.log("channels On getUserFromChannels : ", channels);
 		const channel = channels.find((c) => c.id === channelId);
 		setState(channel?.speaker);
 	}
@@ -317,6 +329,8 @@ export const fetchMessages = async (channelId, setState) => {
  * @param {number} user_id The channel creator
  */
 export const addChannel = async (user1, last_message) => {
+	const loggedUserId = localStorage.getItem("userId");
+
 	try {
 		const { data } = await supabase
 			.from("channels")
@@ -338,12 +352,54 @@ export const addMessage = async (
 	content,
 	sender_id,
 	receiver_id,
-	channel_id
+	channel_id,
+	updateUserContext
 ) => {
 	try {
-		await supabase
+		const { data, error } = await supabase
 			.from("messages")
-			.insert([{ content, sender_id, receiver_id, channel_id }]);
+			.insert([{ content, sender_id, receiver_id, channel_id }])
+			.select("*, sender_id(*)");
+
+		if (!error) {
+			updateUserContext("wallet", -COST_OF_ONE_MESSAGE, true);
+			await updateWallet(data[0].sender_id.wallet - COST_OF_ONE_MESSAGE);
+		} else {
+			console.log("error", error);
+		}
+	} catch (error) {
+		alert("Erreur lors de l'envoi du message !");
+	}
+};
+
+/**
+ * Insert a new Nix message into the DB
+ * @param {string} message The message text
+ * @param {number} channel_id The receiver
+ * @param {number} author_id The author
+ */
+export const addNixMessage = async (content, sender_id) => {
+	try {
+		const loggedUserId = localStorage.getItem("userId");
+		const newChannelId = await addChannel(sender_id, content);
+
+		const { data, error } = await supabase
+			.from("messages")
+			.insert([
+				{
+					content,
+					sender_id,
+					receiver_id: loggedUserId,
+					channel_id: newChannelId,
+				},
+			])
+			.select("*, sender_id(*)");
+
+		if (!error) {
+			console.log("data", data);
+		} else {
+			console.log("error", error);
+		}
 	} catch (error) {
 		alert("Erreur lors de l'envoi du message !");
 	}
@@ -384,7 +440,7 @@ export const fetchUserRoles = async (setState) => {
  * @param {object[]} data Pass the list of confused channel objects
  */
 export const getChannelsInfos = (data) => {
-	return data.map((channel) => {
+	return data?.map((channel) => {
 		return {
 			id: channel.id,
 			lastMessage: channel.last_message,
@@ -423,6 +479,8 @@ export const handeChannelsChanges = (
 };
 
 const getSpeaker = (column1, column2, object) => {
+	const loggedUserId = localStorage.getItem("userId");
+
 	const speaker = Object.values({
 		user1: object[column1],
 		user2: object[column2],
