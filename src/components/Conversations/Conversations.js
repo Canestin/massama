@@ -91,29 +91,34 @@ export default function Conversations() {
 
 	return (
 		<>
-			<div className="hearderMobile">
-				<HeaderMobile title="Messages" />
-			</div>
+			{!showDiscussion && (
+				<div className="hearderMobile">
+					<HeaderMobile title="Messages" />
+				</div>
+			)}
+
 			<div className={styles.bigContainer}>
 				<Menu />
 				<div className={styles.container}>
-					<div className={styles.containerProfiles}>
-						<div className={styles.containerListConv}>
-							{!!channels &&
-								channels.map((channel) => {
-									return (
-										<Link
-											key={`conversations/${channel?.id}`}
-											to={`/conversations/${channel?.id}`}
-										>
-											<div onClick={() => setShowDiscussion(true)}>
-												<Conv profile={channel} />
-											</div>
-										</Link>
-									);
-								})}
+					{!showDiscussion && (
+						<div className={styles.containerProfiles}>
+							<div className={styles.containerListConv}>
+								{!!channels &&
+									channels.map((channel) => {
+										return (
+											<Link
+												key={`conversations/${channel?.id}`}
+												to={`/conversations/${channel?.id}`}
+											>
+												<div onClick={() => setShowDiscussion(true)}>
+													<Conv profile={channel} />
+												</div>
+											</Link>
+										);
+									})}
+							</div>
 						</div>
-					</div>
+					)}
 					<div
 						className={`${styles.containerConv} ${
 							showDiscussion && styles.convDisplayed
