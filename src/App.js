@@ -18,8 +18,12 @@ function App() {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
+	const updateUserContext = (column, value) => {
+		setUser((user) => ({ ...user, [column]: value }));
+	};
+
 	return (
-		<UserContext.Provider value={user}>
+		<UserContext.Provider value={{ user, updateUserContext }}>
 			<div className="App">
 				<Routes>
 					<Route path="/" element={<Home />} />
