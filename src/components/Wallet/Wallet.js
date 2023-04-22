@@ -1,6 +1,9 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import styles from "./Wallet.module.css";
 import HeaderMobile from "../HeaderMobile/HeaderMobile";
+import UserContext from "../../utils/UserContext";
+import { coinsMap } from "../../utils/helpers";
+import { updateWallet } from "../../utils/store";
 
 var cdn = document.createElement("script");
 cdn.setAttribute("src", "https://cdn.cinetpay.com/seamless/main.js");
@@ -8,12 +11,14 @@ document.head.appendChild(cdn);
 
 export default function Wallet() {
 	const [choice, setChoice] = useState(1000);
+	const { user, updateUserContext } = useContext(UserContext);
 
 	const handleChoice = (c) => {
 		setChoice(c);
 	};
-	const handlePay = () => {
+	const handlePay = async () => {
 		console.log("Pack choisi: ", choice);
+		const addWallet = coinsMap.get(choice);
 
 		/* eslint-disable no-undef */
 		CinetPay.setConfig({
@@ -29,13 +34,15 @@ export default function Wallet() {
 			channels: "ALL",
 			description: "Achat du pack",
 		});
-		CinetPay.waitResponse(function (data) {
+		CinetPay.waitResponse(async function (data) {
 			if (data.status === "REFUSED") {
 				if (alert("Votre paiement a échoué")) {
 					window.location.reload();
 				}
 			} else if (data.status === "ACCEPTED") {
 				if (alert("Votre paiement a été effectué avec succès")) {
+					updateUserContext("wallet", user.wallet + addWallet);
+					await updateWallet(user.wallet + addWallet);
 					window.location.reload();
 				}
 			}

@@ -77,7 +77,7 @@ export default function Conversations() {
 
 	const handleSendMessage = async () => {
 		if (!inputValue) return;
-		if (loggedUser.wallet < COST_OF_ONE_MESSAGE * 1000) {
+		if (loggedUser.wallet < COST_OF_ONE_MESSAGE) {
 			setPopupVisible(true);
 			return;
 		}
@@ -91,10 +91,22 @@ export default function Conversations() {
 
 		if (!existingChannel) {
 			const newChannelId = await addChannel(user.id, inputValue);
-			addMessage(inputValue, loggedUser?.id, user.id, newChannelId);
+			await addMessage(
+				inputValue,
+				loggedUser?.id,
+				user.id,
+				newChannelId,
+				updateUserContext
+			);
 		} else {
 			await updateChannel(existingChannel.id, inputValue);
-			addMessage(inputValue, loggedUser?.id, user.id, existingChannel.id);
+			await addMessage(
+				inputValue,
+				loggedUser?.id,
+				user.id,
+				existingChannel.id,
+				updateUserContext
+			);
 		}
 
 		setInputValue("");
@@ -124,7 +136,7 @@ export default function Conversations() {
 								channels.map((channel) => {
 									return (
 										<Link
-											key={`conversations/${channel?.id}`}
+											key={channel?.id}
 											to={`/conversations/${channel?.id}`}
 										>
 											<div onClick={() => setShowDiscussion(true)}>
@@ -270,7 +282,7 @@ function Conv({ profile }) {
 			<div className={styles.infosprofile}>
 				<div className={styles.nameAndHour}>
 					<span style={{ color: "white", fontSize: "13px" }}>
-						{profile.speaker.username}
+						{profile?.speaker?.username}
 					</span>
 					<span style={{ color: "gray", fontSize: "11px" }}>
 						{formattedDate}

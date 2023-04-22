@@ -12,7 +12,17 @@ export default function Profile() {
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		fetchUserById(userId, setUser);
+		const fu = async () => {
+			const u = await fetchUserById(userId, setUser);
+			setTimeout(() => {
+				if (!u) {
+					navigate("/feed");
+				}
+			}, 2000);
+		};
+
+		fu();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [userId]);
 
 	console.log("userId de chez user : ", userId);

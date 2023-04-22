@@ -13,29 +13,30 @@ export default function Feed() {
 	const [isProfilesReady2, setIsProfilesReady2] = useState(false);
 	const [isProfilesReady3, setIsProfilesReady3] = useState(false);
 	useEffect(() => {
+		console.log("ON FEED");
 		fetchProfiles(setProfiles);
 
-		// const isFirsTime = localStorage.getItem("isFirsTime");
+		const isFirsTime = localStorage.getItem("isFirsTime");
 
-		// if (isFirsTime === "YES") {
-		// localStorage.setItem("isFirsTime", "NO");
+		if (isFirsTime === "YES") {
+			localStorage.setItem("isFirsTime", "NO");
 
-		setTimeout(() => {
+			setTimeout(() => {
+				setIsProfilesReady1(true);
+			}, 1500);
+
+			setTimeout(() => {
+				setIsProfilesReady2(true);
+			}, 3000);
+
+			setTimeout(() => {
+				setIsProfilesReady3(true);
+			}, 4500);
+		} else {
 			setIsProfilesReady1(true);
-		}, 1500);
-
-		setTimeout(() => {
 			setIsProfilesReady2(true);
-		}, 3000);
-
-		setTimeout(() => {
 			setIsProfilesReady3(true);
-		}, 4500);
-		// } else {
-		// 	setIsProfilesReady1(true);
-		// 	setIsProfilesReady2(true);
-		// 	setIsProfilesReady3(true);
-		// }
+		}
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);

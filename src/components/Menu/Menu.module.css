@@ -90,6 +90,19 @@
 	z-index: 100;
 }
 
+.notif {
+	font-size: 10px;
+	font-weight: bold;
+	height: 20px;
+	width: 20px;
+	background-color: rgb(64, 64, 211);
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: white;
+}
+
 @media only screen and (max-width: 768px) {
 	.container {
 		position: relative;

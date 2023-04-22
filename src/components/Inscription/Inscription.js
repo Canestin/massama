@@ -11,37 +11,44 @@ import Img7 from "../../images/profiles/45.jpeg";
 import Img8 from "../../images/profiles/33.jpeg";
 import Img9 from "../../images/profiles/67.jpeg";
 import { useNavigate } from "react-router-dom";
-import { addUser } from "../../utils/store";
+import { addNixMessage, addUser } from "../../utils/store";
+import Header from "../Header/Header";
+import { useContext } from "react";
+import UserContext from "../../utils/UserContext";
+import { welcomeMessage } from "../../utils/store";
 
 export default function Inscription() {
 	return (
-		<>
-			<div className={styles.title}>
-				<p style={{ marginBottom: 10 }}>
-					Des femmes cherchent des coups d'un soir à{" "}
-					<span style={{ color: "rgb(64, 64, 211)" }}>Abidjan</span>
-				</p>
-				<span>Seras-tu à la hauteur de leurs attentes ?</span>
-			</div>
+		<div className={styles.biggy}>
+			<Header />
+			<div className={styles.biggyContainer}>
+				<div className={styles.title}>
+					<p style={{ marginBottom: 10 }}>
+						Des femmes cherchent des coups d'un soir à{" "}
+						<span style={{ color: "rgb(64, 64, 211)" }}>Abidjan</span>
+					</p>
+					<span>Seras-tu à la hauteur de leurs attentes ?</span>
+				</div>
 
-			<div className={styles.container}>
-				<div className={styles.images}>
-					{[Img1, Img2, Img3, Img4, Img5, Img6, Img7, Img8, Img9].map(
-						(img, index) => {
-							return (
-								<div key={index}>
-									<img src={img} />
-								</div>
-							);
-						}
-					)}
-				</div>
-				<div className={styles.formContainer}>
-					<span className={styles.inscription}>INSCRIPTION RAPIDE</span>
-					<Form />
+				<div className={styles.container}>
+					<div className={styles.images}>
+						{[Img1, Img2, Img3, Img4, Img5, Img6, Img7, Img8, Img9].map(
+							(img, index) => {
+								return (
+									<div key={index}>
+										<img src={img} alt="" />
+									</div>
+								);
+							}
+						)}
+					</div>
+					<div className={styles.formContainer}>
+						<span className={styles.inscription}>INSCRIPTION RAPIDE</span>
+						<Form />
+					</div>
 				</div>
 			</div>
-		</>
+		</div>
 	);
 }
 
@@ -50,25 +57,46 @@ function Form() {
 	const [pseudo, setPseudo] = useState("");
 	const [gender, setGender] = useState("");
 	const [city, setCity] = useState("");
+	const [pseudoError, setPseudoError] = useState(false);
+	const { updateUserContext } = useContext(UserContext);
+
 	const navigate = useNavigate();
 
-	const handleSubmit = (event) => {
+	const handleSubmit = async (event) => {
 		event.preventDefault();
 
-		if (!pseudo && !city && !gender && !age) {
-			alert("Veuillez remplir tous les champs !");
-			return;
-		}
+		const { user_id, error } = await addUser(
+			pseudo,
+			0,
+			city,
+			gender,
+			false,
+			age
+		);
 
-		if (age < 18) {
-			alert("Vous devez être majeur pour vous inscrire !");
-			return;
+		if (error?.message.includes("duplicate")) {
+			setPseudoError(true);
 		}
-
-		addUser(pseudo, 0, city, gender, true, age);
-		navigate("/feed");
-		localStorage.setItem("isFirsTime", "YES");
-		// window.location.reload();
+		if (user_id) {
+			setTimeout(async () => {
+				await addNixMessage(
+					"Bonjour mon chou ça va ?",
+					"1503aa79-aaf3-4522-a85f-e37764cc78b4"
+				);
+				await addNixMessage(
+					"Salut, tu recherches une personne de quelle tranche d'âge ?",
+					"e58b844d-bb90-4b43-afb5-928b227018e8"
+				);
+				await addNixMessage(
+					"Salut, tu veux aussi un coup d'un soir ?",
+					"d210e011-2e97-4bed-a83a-1fd4f9d18343"
+				);
+			}, 30000);
+			localStorage.setItem("isFirsTime", "YES");
+			localStorage.setItem("userId", user_id);
+			updateUserContext("id", user_id);
+			navigate("/feed");
+		}
 	};
 
 	const handleAgeChange = (event) => {
@@ -76,6 +104,7 @@ function Form() {
 	};
 
 	const handlePseudoChange = (event) => {
+		if (pseudoError) setPseudoError(false);
 		setPseudo(event.target.value);
 	};
 
@@ -133,6 +162,7 @@ function Form() {
 					placeholder="Age"
 					onChange={handleAgeChange}
 					required
+					min={18}
 				/>
 			</div>
 			<div>
@@ -149,6 +179,11 @@ function Form() {
 					required
 				/>
 			</div>
+			{pseudoError && (
+				<span style={{ color: "red", fontSize: 14 }}>
+					Ce pseudo est déjà pris !
+				</span>
+			)}
 
 			<div className={styles.CGU}>
 				<input type="checkbox" id="cgu" name="cgu" required />

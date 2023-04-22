@@ -4,11 +4,16 @@
 	padding: 0;
 }
 
+.biggy {
+}
+.biggyContainer {
+	margin: 60px 0 0;
+}
 .title {
-	margin: 90px 30px;
 	font-weight: bold;
 	color: white;
 	text-align: center;
+	margin: 0 30px 70px;
 }
 
 .title > p {
@@ -22,7 +27,7 @@
 
 .container {
 	width: 80vw;
-	margin: 0 auto 100px;
+	margin: 0 auto;
 	display: grid;
 	grid-template-columns: 1fr 1fr;
 	gap: 100px;
@@ -55,6 +60,7 @@ img:hover {
 
 .form {
 	height: 100%;
+	max-width: 600px;
 }
 
 .form > div {
@@ -75,10 +81,15 @@ button {
 	width: 100%;
 	height: 45px;
 	border: none;
-	background-color: #28a745;
+	background-color: rgba(64, 64, 211, 0.8);
 	color: white;
 	font-weight: bold;
 	font-size: 20px;
+	cursor: pointer;
+}
+
+button:hover {
+	background-color: rgb(64, 64, 211);
 }
 
 .icon {

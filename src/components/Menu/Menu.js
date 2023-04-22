@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Menu.module.css";
-import { BsSearch, BsEye } from "react-icons/bs";
+import { BsSearch } from "react-icons/bs";
 import { TbMessageCircle, TbWallet, TbSettings, TbHelp } from "react-icons/tb";
 import { RiLogoutBoxLine } from "react-icons/ri";
 import { Link } from "react-router-dom";
@@ -23,7 +23,7 @@ export default function Menu({ showMenu, setShowMenu }) {
 		setShowMenu(!showMenu);
 		console.log("Menu Hidden !");
 	};
-	const channelId = !!channels[0] ? channels[0].id : "no-message";
+	const channelId = !!channels[0] ? channels[0]?.id : "no-message";
 
 	useEffect(() => {
 		function handleResize() {
@@ -62,12 +62,18 @@ export default function Menu({ showMenu, setShowMenu }) {
 						<BsSearch color="#6438E1" size={windowSize.width > 768 ? 28 : 25} />
 						<span>Parcourir</span>
 					</Link>
-					<Link to={`/conversations/${channelId}`}>
+					<Link
+						to={
+							windowSize.width > 468
+								? `/conversations/${channelId}`
+								: "/conversations"
+						}
+					>
 						<TbMessageCircle
 							color="#6438E1"
 							size={windowSize.width > 768 ? 28 : 25}
 						/>
-						<span>Messages</span>
+						<span>Messages</span> <div className={styles.notif}>1+</div>
 					</Link>
 					{/* <Link to="/views">
 						<BsEye color="#6438E1" size={windowSize.width > 768 ? 28 : 25} />
