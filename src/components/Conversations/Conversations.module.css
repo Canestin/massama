@@ -33,7 +33,7 @@
 }
 
 .containerConv {
-	/* overflow: hidden; */
+	overflow: hidden;
 	scroll-snap-type: none;
 	background-color: #181f29;
 	border-radius: 20px;
@@ -294,7 +294,6 @@
 		z-index: 999;
 		transform: translateX(100%);
 		transition: transform 0.3s ease-in-out;
-		background-color: #0f1 !important;
 	}
 
 	.goBack {
