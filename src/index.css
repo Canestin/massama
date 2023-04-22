@@ -18,5 +18,6 @@ textarea {
 @media only screen and (max-width: 768px) {
 	.hearderMobile {
 		display: block;
+		margin-bottom: 10px;
 	}
 }
