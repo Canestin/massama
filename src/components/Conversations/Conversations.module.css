@@ -1,3 +1,7 @@
+* {
+	box-sizing: border-box;
+}
+
 .bigContainer {
 	display: grid;
 	grid-template-columns: 250px 1fr;
@@ -203,9 +207,9 @@
 	width: 100%;
 	margin: 0 auto;
 	flex-grow: 1;
-	height: 60px;
-	position: sticky;
-	bottom: 0;
+	height: 100%;
+	/* position: sticky; */
+	/* bottom: 0; */
 	background-color: #181f29;
 	box-shadow: 2px 0 2px rgb(0, 0, 0);
 }
