@@ -54,7 +54,7 @@ export default function Profile() {
 					<div className={styles.like}>
 						<span className={styles.title}>Ce que j'aime</span>
 						<div className={styles.likeWords}>
-							{new Array(5).fill("Levrette").map((like, index) => (
+							{user?.ilike.map((like, index) => (
 								<span key={index}>{like}</span>
 							))}
 						</div>
