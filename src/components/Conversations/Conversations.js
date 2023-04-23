@@ -17,6 +17,7 @@ import { useContext } from "react";
 import UserContext from "../../utils/UserContext";
 import { COST_OF_ONE_MESSAGE } from "../../constants";
 import PopupRechargeWallet from "../Popup/Popup";
+import { Helmet } from "react-helmet";
 
 export default function Conversations() {
 	const [inputValue, setInputValue] = React.useState("");
@@ -114,6 +115,13 @@ export default function Conversations() {
 
 	return (
 		<>
+			<Helmet>
+				<title>Conversations</title>
+				<meta name="description" content="Conversations" />
+				<meta property="og:title" content="Conversations" />
+				<meta property="og:description" content="Conversations" />
+				<meta property="og:url" content="https://meetblack.fun/conversations" />
+			</Helmet>
 			<PopupRechargeWallet
 				popupVisible={popupVisible}
 				setPopupVisible={setPopupVisible}

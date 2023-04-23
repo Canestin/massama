@@ -16,39 +16,59 @@ import Header from "../Header/Header";
 import { useContext } from "react";
 import UserContext from "../../utils/UserContext";
 import { welcomeMessage } from "../../utils/store";
+import { Helmet } from "react-helmet";
 
 export default function Inscription() {
 	return (
-		<div className={styles.biggy}>
-			<Header />
-			<div className={styles.biggyContainer}>
-				<div className={styles.title}>
-					<p style={{ marginBottom: 10 }}>
-						Des femmes cherchent des coups d'un soir à{" "}
-						<span style={{ color: "rgb(64, 64, 211)" }}>Abidjan</span>
-					</p>
-					<span>Seras-tu à la hauteur de leurs attentes ?</span>
-				</div>
+		<>
+			<Helmet>
+				<title>MeetBlack</title>
+				<meta name="theme-color" content="#ffffff" />
 
-				<div className={styles.container}>
-					<div className={styles.images}>
-						{[Img1, Img2, Img3, Img4, Img5, Img6, Img7, Img8, Img9].map(
-							(img, index) => {
-								return (
-									<div key={index}>
-										<img src={img} alt="" />
-									</div>
-								);
-							}
-						)}
+				<meta
+					name="description"
+					content="Rencontrer des filles sympas à Abidjan"
+				/>
+				<meta property="og:title" content="MeetBlack" />
+				<meta
+					property="og:description"
+					content="Rencontrer des filles sympas à Abidjan"
+				/>
+				<meta property="og:url" content="https://meetblack.fun/conversations" />
+				<meta property="og:type" content="website" />
+			</Helmet>
+
+			<div className={styles.biggy}>
+				<Header />
+				<div className={styles.biggyContainer}>
+					<div className={styles.title}>
+						<p style={{ marginBottom: 10 }}>
+							Des femmes cherchent des coups d'un soir à{" "}
+							<span style={{ color: "rgb(64, 64, 211)" }}>Abidjan</span>
+						</p>
+						<span>Seras-tu à la hauteur de leurs attentes ?</span>
 					</div>
-					<div className={styles.formContainer}>
-						<span className={styles.inscription}>INSCRIPTION RAPIDE</span>
-						<Form />
+
+					<div className={styles.container}>
+						<div className={styles.images}>
+							{[Img1, Img2, Img3, Img4, Img5, Img6, Img7, Img8, Img9].map(
+								(img, index) => {
+									return (
+										<div key={index}>
+											<img src={img} alt="" />
+										</div>
+									);
+								}
+							)}
+						</div>
+						<div className={styles.formContainer}>
+							<span className={styles.inscription}>INSCRIPTION RAPIDE</span>
+							<Form />
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
+		</>
 	);
 }
 

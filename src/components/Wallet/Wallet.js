@@ -4,6 +4,7 @@ import HeaderMobile from "../HeaderMobile/HeaderMobile";
 import UserContext from "../../utils/UserContext";
 import { coinsMap } from "../../utils/helpers";
 import { updateWallet } from "../../utils/store";
+import { Helmet } from "react-helmet";
 
 var cdn = document.createElement("script");
 cdn.setAttribute("src", "https://cdn.cinetpay.com/seamless/main.js");
@@ -54,6 +55,13 @@ export default function Wallet() {
 
 	return (
 		<>
+			<Helmet>
+				<title>Wallet</title>
+				<meta name="description" content="Recharger mon compte" />
+				<meta property="og:title" content="Recharger mon compte" />
+				<meta property="og:description" content="Recharger mon compte" />
+				<meta property="og:url" content="https://meetblack.fun/wallet" />
+			</Helmet>
 			<div className="hearderMobile">
 				<HeaderMobile title="Paiement" />
 			</div>

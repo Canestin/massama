@@ -6,6 +6,7 @@ import { fetchProfiles } from "../../utils/store";
 import { useEffect, useState } from "react";
 import HeaderMobile from "../HeaderMobile/HeaderMobile";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { Helmet } from "react-helmet";
 
 export default function Feed() {
 	const [profiles, setProfiles] = useState([]);
@@ -42,40 +43,48 @@ export default function Feed() {
 	}, []);
 
 	return (
-		<div className={styles.container}>
-			<div className="hearderMobile">
-				<HeaderMobile title="Meet black" />
+		<>
+			<Helmet>
+				<title>Feed</title>
+				<meta property="og:title" content="Feed" />
+				<meta property="og:url" content="https://meetblack.fun/feed" />
+			</Helmet>
+
+			<div className={styles.container}>
+				<div className="hearderMobile">
+					<HeaderMobile title="Meet black" />
+				</div>
+
+				<Menu />
+
+				<div className={styles.profilesList}>
+					{isProfilesReady3 ? (
+						profiles.map((profile) => {
+							return (
+								<Link key={profile.id} to={`/profile/${profile.id}`}>
+									<User profile={profile} />
+								</Link>
+							);
+						})
+					) : (
+						<div className={styles.profileNotReady}>
+							{!isProfilesReady1 ? (
+								<span>Recherche des profiles recents...</span>
+							) : !isProfilesReady2 ? (
+								<span>Correspondace des profiles...</span>
+							) : (
+								<span>98 filles près de chez vous</span>
+							)}
+
+							<AiOutlineLoading3Quarters
+								className={styles.loading}
+								color="white"
+							/>
+						</div>
+					)}
+				</div>
 			</div>
-
-			<Menu />
-
-			<div className={styles.profilesList}>
-				{isProfilesReady3 ? (
-					profiles.map((profile) => {
-						return (
-							<Link key={profile.id} to={`/profile/${profile.id}`}>
-								<User profile={profile} />
-							</Link>
-						);
-					})
-				) : (
-					<div className={styles.profileNotReady}>
-						{!isProfilesReady1 ? (
-							<span>Recherche des profiles recents...</span>
-						) : !isProfilesReady2 ? (
-							<span>Correspondace des profiles...</span>
-						) : (
-							<span>98 filles près de chez vous</span>
-						)}
-
-						<AiOutlineLoading3Quarters
-							className={styles.loading}
-							color="white"
-						/>
-					</div>
-				)}
-			</div>
-		</div>
+		</>
 	);
 }
 

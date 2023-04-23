@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import UserContext from "../../utils/UserContext";
+import { Helmet } from "react-helmet";
 // import supabase from "../../utils/supabase";
 // import { iLike } from "../../data";
 
@@ -39,21 +40,29 @@ export default function NotFound() {
 	}, []);
 
 	return (
-		<div
-			style={{
-				width: "100vw",
-				height: "70vh",
-				display: "flex",
-				flexDirection: "column",
-				justifyContent: "center",
-				alignItems: "center",
-				textAlign: "center",
-				color: "white",
-				marginTop: 20,
-			}}
-		>
-			<h1 style={{ marginBottom: 50 }}>Page non trouvée</h1>
-			<p>Redirection...</p>
-		</div>
+		<>
+			<Helmet>
+				<title>Page non trouvée</title>
+				<meta property="og:image" content="https://meetblack.fun/logo.png" />
+				<meta property="og:title" content="Page non trouvée" />
+			</Helmet>
+
+			<div
+				style={{
+					width: "100vw",
+					height: "70vh",
+					display: "flex",
+					flexDirection: "column",
+					justifyContent: "center",
+					alignItems: "center",
+					textAlign: "center",
+					color: "white",
+					marginTop: 20,
+				}}
+			>
+				<h1 style={{ marginBottom: 50 }}>Page non trouvée</h1>
+				<p>Redirection...</p>
+			</div>
+		</>
 	);
 }
