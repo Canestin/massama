@@ -24,14 +24,6 @@
 	object-fit: contain;
 }
 
-.left ul {
-	display: flex;
-	flex-direction: row;
-	list-style: none;
-	gap: 50px;
-	font-size: 20px;
-}
-
 .right {
 	height: 40px;
 	display: flex;
@@ -42,9 +34,8 @@
 
 @media screen and (max-width: 600px) {
 	.left img {
-		width: calc(100% - 20px);
+		width: 120px;
 		height: 30px;
-		margin-left: 20px;
 	}
 
 	.right {
